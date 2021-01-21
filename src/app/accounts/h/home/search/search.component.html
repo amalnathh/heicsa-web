@@ -1,0 +1,21 @@
+<div id="wrap">
+  <div class="input">
+    <div class="input_P">
+      <label>
+        <input type="text" #input (focus)="this.adb=true">
+      </label>
+      <div class="autoComplete">
+        <div *ngFor="let item of items;index as i">
+          <div class="autoCitems">
+            <div>{{item.st}} {{i}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button mat-icon-button>
+        <mat-icon fontSet="material-icons-round">search</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

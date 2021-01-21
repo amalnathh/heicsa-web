@@ -1,0 +1,141 @@
+.parent{
+  height: 100%;
+  width: 100%;
+}
+.dfhd{
+  background-image: url('../../assets/app/intro/hexagon.svg');
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+.djhbsd3{
+  display: flex;
+  align-items: center;
+}
+
+.djhbsd3>div{
+  width: 100%;
+  height: 100%;
+}
+.topBar{
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+.app_login{
+  margin-top:40px;
+  height: 100%;
+}
+.rightSideBtn{
+  width: 100%;
+  text-align: right;
+  padding: 3px 20px 3px 3px;
+}
+.kjsnks{
+  padding: 10px 10px 10px 30px;
+  color: aliceblue;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+}
+.kjsnks>div{
+ height:100%;
+  margin-top: 10px;
+}
+.kjsnks>div>span{
+  font-size: 40px;
+  font-weight: bold;
+}
+.insideText{
+  margin-top: 70px;
+  margin-bottom: 70px;
+  font-size: 90px;
+  padding: 50px 0px 50px 30px;
+}
+.Loader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(242, 255, 255);
+}
+
+.bouncer {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  width: 100px;
+  height: 50px;
+}
+
+.bouncer div {
+  width: 15px;
+  height: 15px;
+  background: #0000ff;
+  border-radius: 50%;
+  animation: bouncer 0.5s cubic-bezier(.19, .57, .3, .98) infinite alternate;
+}
+
+.bouncer div:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.bouncer div:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.bouncer div:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+@keyframes bouncer {
+  from {
+    transform: translateY(0)
+  }
+  to {
+    transform: translateY(-40px)
+  }
+}
+@media screen and (max-width:1300px){
+  .insideText{
+    font-size: 85px;
+  }
+}
+@media screen and (max-width:1200px){
+  .insideText{
+    margin-top: 40px;
+    margin-bottom: 40px;
+    font-size: 75px;
+    padding: 35px 0px 35px 18px;
+  }
+}
+@media screen and (max-width:860px){
+  .djhbsd3{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+@media screen and (max-width:600px){
+  .insideText{
+    font-size: 60px;
+    margin-top: 10px;
+    margin-bottom: 6px;
+  }
+  .app_login{
+    margin-top:10px;
+  }
+}
+@media screen and (max-width:450px){
+  .insideText{
+    font-size: 50px;
+    margin-top: 10px;
+    margin-bottom: 6px;
+    padding: 10px 0px 10px 5px;
+  }
+}

@@ -1,0 +1,135 @@
+.example-form {
+  display: block;
+  font-size: 17px;
+}
+
+.margin10 {
+  margin: 10px;
+}
+
+.margin11 {
+  margin-top: 30px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+input {
+  width: 400px;
+}
+
+#btng {
+  width: 62px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.padding {
+  padding: 40px;
+  position:relative;
+  background-color: ghostwhite;
+  border-radius: 10px;
+  box-shadow: rgba(26, 26, 26, 0.705) 3px 3px 25px;
+}
+
+.furpass {
+  text-decoration: none;
+  color: royalblue;
+  line-height: 25px;
+  cursor: pointer;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh
+}
+
+.floatright {
+  float: right;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.rc2b {
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.signuptxt>a {
+  text-decoration: none;
+  color: royalblue;
+  cursor: pointer;
+}
+
+.signuptxt {
+  margin-top: 8px;
+}
+
+.sac3f {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.sac3f>div {
+  padding: 10px;
+}
+
+.d23h {
+  margin-bottom: 10px;
+}
+#mhd{
+  width: calc(100% - 80px);
+  height:calc(100% - 80px);
+  position: absolute;
+  background-color:rgba(248, 248, 255, 0.904);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width:600px) {
+  .padding {
+    box-shadow: none;
+    background-color: white;
+  }
+  .content {
+    height: 100%;
+  }
+}
+
+@media screen and (max-width:450px) {
+  .padding {
+    background-color: rgba(245, 245, 245, 0.904);
+  }
+}
+:host ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+  stroke: #04578f;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: lightgrey !important;
+  /*opacity: 1!important;*/
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: royalblue !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+  color: royalblue !important;
+  opacity: 0.8 !important;
+}
+
+::ng-deep .mat-form-field-label {
+  color: rgba(0, 0, 0, .6) !important;
+  /*color: $mainColor!important;*/
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: royalblue !important;
+}

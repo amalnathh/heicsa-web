@@ -1,0 +1,36 @@
+<div class="parent_Message">
+    <div class="top">
+        <div class="name"><span></span></div>
+        <div class="pic">
+            <!-- <img [alt]="userImage" [src]="this.url" width="50px" height="50px" class="pic_image"> -->
+        </div>
+    </div>
+    <div class="flexContainer">
+        <section class="messages_area">
+            <incomming-msg [msgData]="m_data_in"></incomming-msg>
+            <out-going-msg [msgData]="m_data_out"></out-going-msg>
+            <incomming-msg [msgData]="m_data_in"></incomming-msg>
+            <out-going-msg [msgData]="m_data_out"></out-going-msg>
+            <incomming-msg [msgData]="m_data_in"></incomming-msg>
+            <incomming-msg [msgData]="m_data_in"></incomming-msg>
+            <out-going-msg [msgData]="m_data_out"></out-going-msg>
+        </section>
+        <section class="message_input">
+            <div class="padding">
+                <mat-form-field appearance="outline" [style.width.px]=450>
+                    <mat-label>Message</mat-label>
+                    <span contenteditable>
+                        <textarea [(ngModel)]="message" formControl="msg" matInput name="message"
+                            type="text" matTextareaAutosize matAutosizeMinRows=1 matAutosizeMaxRows=6>
+                            </textarea>
+                    </span>
+                </mat-form-field>
+                <div style="padding-bottom: 20px;">
+                    <button mat-icon-button matSuffix>
+                        <mat-icon fontSet="material-icons-round">send</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+.parent_Message {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    max-height: 100vh;
+}
+
+.messages_area {
+    display: block;
+    width: 100%;
+}
+
+/*this part describes about the msg ui*/
+
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: rgb(201, 201, 201);
+    border-radius: 4px;
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(146, 146, 146);
+}
+
+.flexContainer {
+    width: 70%;
+}
+
+.padding {
+    display: flex;
+    align-items: flex-end;
+    position: absolute;
+    bottom: 20px;
+    background-color: white;
+}
+
+:host ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #04578f;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    color: lightgrey !important;
+    /*opacity: 1!important;*/
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+    color: royalblue !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+    color: royalblue !important;
+    opacity: 0.8 !important;
+}
+
+::ng-deep .mat-form-field-label {
+    color: rgba(0, 0, 0, .6) !important;
+    /*color: $mainColor!important;*/
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+    color: royalblue !important;
+}

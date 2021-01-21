@@ -1,0 +1,67 @@
+<div *ngIf="this.authdata.homeInitialize;else HomeReady">
+  <div class="Loader">
+    <div class="bouncer">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</div>
+<ng-template #HomeReady>
+  <div class="parent">
+    <div class="top">
+      <div class="top_div">
+        <ng-template [ngIf]='(true)'>
+          <div class="heicsa">
+            <span>heicsa</span>
+          </div>
+        </ng-template>
+        <div class="search_bar">
+          <div>
+            <app-search></app-search>
+          </div>
+        </div>
+      </div>
+      <div class="acc_menu">
+        <div>
+          <div class="down">
+            <button mat-icon-button (click)="this.miniMenu=!this.miniMenu">
+              <ng-template [ngIf]='this.miniMenu'>
+                <mat-icon fontSet="material-icons-round">close</mat-icon>
+              </ng-template>
+              <ng-template [ngIf]='!this.miniMenu'>
+                <mat-icon fontSet="material-icons-round">arrow_drop_down</mat-icon>
+              </ng-template>
+            </button>
+          </div>
+          <div class="newPost">
+            <button mat-icon-button>
+              <mat-icon fontSet="material-icons-round">add_box</mat-icon>
+            </button>
+          </div>
+          <div class="notfications">
+            <button mat-icon-button>
+              <mat-icon fontSet="material-icons-round">notifications</mat-icon>
+            </button>
+          </div>
+          <div class="profile_image">
+            <div class="Little_padding">
+              <img [src]='this.authdata.heicsaUser.imgUrl'
+                (click)="router.navigateByUrl('/user/'+this.authdata.heicsaUser.name)">
+            </div>
+          </div>
+          <ng-template [ngIf]="this.miniMenu">
+            <div class="menu_container">
+              <app-menu></app-menu>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <app-new-post></app-new-post>
+  </div>
+  <router-outlet></router-outlet>
+</ng-template>

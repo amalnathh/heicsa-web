@@ -1,0 +1,15 @@
+<div [formGroup]="usrname" class="userName">
+    <mat-form-field [style.width.px]=260 appearance="outline" hideRequiredMarker>
+        <mat-label>Username</mat-label>
+        <label>
+            <input [(ngModel)]="username" class="inputsize" formControlName="usernameFormControl" matInput name="usrnm" required
+                   type="text"/>
+        </label>
+        <mat-error *ngIf="usrname.get('usernameFormControl').hasError('required')">Enter a username</mat-error>
+        <mat-hint *ngIf="!available&&!hidden"><b>Username is taken.</b></mat-hint>
+        <mat-hint *ngIf="available&&!hidden"><b>Username is available.</b></mat-hint>
+    </mat-form-field>
+    <div id="idbtnus">
+        <button (click)='hUc(username)' id='btnUs' mat-flat-button>Save</button>
+    </div>
+</div>

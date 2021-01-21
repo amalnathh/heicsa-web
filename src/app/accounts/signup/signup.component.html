@@ -1,0 +1,173 @@
+<div class="s_parent">
+  <form [formGroup]='SignUpForm'>
+    <div class="in_form">
+      <div class="google_loader" *ngIf="!authService.G_authReturn">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
+      <div class="in_in_form">
+        <div class="sf2" *ngIf='this.authService.signupLoading'>
+          <mat-progress-bar color="warn" mode="indeterminate"></mat-progress-bar>
+        </div>
+        <mat-horizontal-stepper linear>
+          <mat-step
+            [completed]="(!SignUpForm.get('nameFormControl').hasError('required'))&&(!SignUpForm.get('lnameFormControl').hasError('required'))&&(!SignUpForm.get('userNameFormControl').hasError('required'))&&(!SignUpForm.get('userNameFormControl').hasError('maxlength'))&&(!SignUpForm.get('userNameFormControl').hasError('minlength'))"
+            label="Name">
+            <div class="padding flex">
+              <mat-form-field [style.width.%]=48 hideRequiredMarker>
+                <mat-label>First Name</mat-label>
+                <input [(ngModel)]="firstName" formControlName="nameFormControl" aria-label="First name" matInput
+                  name="first" placeholder="Albert" required>
+                <mat-error *ngIf="SignUpForm.get('nameFormControl').hasError('required')">
+                  Please enter your <strong>Name</strong>.
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field [style.width.%]=48 hideRequiredMarker>
+                <mat-label>Last Name</mat-label>
+                <input [(ngModel)]="lastName" aria-label="last name" matInput name="last" placeholder="Enistien"
+                  [formControl]="SignUpForm.get('lnameFormControl')" required>
+                <mat-error *ngIf="SignUpForm.get('lnameFormControl').hasError('required')">Enter your <strong>last
+                    name</strong>.
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="padding">
+              <mat-form-field appearance="outline" [style.width.%]=100>
+                <mat-label>Username</mat-label>
+                <input matInput [(ngModel)]="username" formControlName="userNameFormControl" (keyup)='usernameCheck()'>
+                <mat-error *ngIf="SignUpForm.get('userNameFormControl').hasError('required')">Enter a username.
+                </mat-error>
+                <mat-error *ngIf="SignUpForm.get('userNameFormControl').hasError('minlength')">
+                  <span>
+                    <b>Username should be more than 4 characters</b>
+                  </span>
+                </mat-error>
+                <mat-error *ngIf="SignUpForm.get('userNameFormControl').hasError('maxlength')">
+                  <span>
+                    <b>Username should be less than 14 characters</b>
+                  </span>
+                </mat-error>
+                <mat-hint *ngIf="!usernameCheck()">
+                  <span style="color: rgb(255, 74, 74);">Username is <b>not available</b>.</span>
+                </mat-hint>
+                <mat-hint
+                  *ngIf="(usernameCheck())&&(!SignUpForm.get('userNameFormControl').hasError('maxlength'))&&!SignUpForm.get('userNameFormControl').hasError('minlength')&&(!SignUpForm.get('userNameFormControl').hasError('required'))">
+                  <span style="color: rgb(28, 110, 17);">Username is <b>available</b>.</span>
+                </mat-hint>
+              </mat-form-field><br>
+            </div>
+            <div style="Width:100%">
+              <div class="b547">
+                <button mat-stroked-button matStepperNext
+                  [disabled]="(SignUpForm.get('nameFormControl').hasError('required'))||(SignUpForm.get('lnameFormControl').hasError('required'))||(SignUpForm.get('userNameFormControl').hasError('required'))||(SignUpForm.get('userNameFormControl').hasError('maxlength'))||(SignUpForm.get('userNameFormControl').hasError('minlength'))">Next</button>
+              </div><br>
+              <div class="b547" style="padding:2px;text-align: center;">
+                <span>Or</span>
+              </div><br>
+              <div style="display: flex;justify-content:center;">
+                <button mat-raised-button (click)='authService.SignUpWithGoogle()'>Sign In With Google</button>
+              </div>
+            </div>
+          </mat-step>
+          <mat-step label="Details"
+            [completed]="!SignUpForm.get('emailFormControl').hasError('email') &&(!SignUpForm.get('emailFormControl').hasError('required'))&&(!DobControl.hasError('required'))">
+            <div class="example-form h23">
+              <mat-form-field [style.width.%]=100 appearance="outline" class="h23b">
+                <mat-label>Enter Your Date Of Birth</mat-label>
+                <label>
+                  <input [matDatepicker]="DateOfBirth" [min]="minDate" [max]="maxDate" placeholder="mm/dd/yyyy" matInput
+                    [formControl]="DobControl" [(ngModel)]='DOB'>
+                </label>
+                <mat-error *ngIf="DobControl.hasError('required')">To verify your age, Enter your <strong>date of
+                    birth.</strong></mat-error>
+                <mat-hint align="end"></mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="DateOfBirth"></mat-datepicker-toggle>
+                <mat-datepicker #DateOfBirth></mat-datepicker>
+              </mat-form-field><br>
+              <mat-form-field [style.width.%]=100 appearance="outline" class="example-full-width margin10"
+                hideRequiredMarker>
+                <mat-label>Enter an email id</mat-label>
+                <label>
+                  <input [(ngModel)]="emailid" [errorStateMatcher]="matcher" formControlName="emailFormControl"
+                    class="inputsize" matInput name="email_name" placeholder="henry@heicsa.com">
+                </label>
+                <mat-hint align="end">We will send a verification mail.</mat-hint>
+                <mat-error
+                  *ngIf="SignUpForm.get('emailFormControl').hasError('email') && !SignUpForm.get('emailFormControl').hasError('required')">
+                  Please enter a valid email address.
+                </mat-error>
+                <mat-error *ngIf="SignUpForm.get('emailFormControl').hasError('required')">
+                  Please enter your <strong>email.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div style="Width:100%;display:flex;justify-content: space-between;">
+              <div>
+                <button mat-stroked-button matStepperPrevious>Back</button>
+              </div>
+              <div>
+                <button mat-stroked-button matStepperNext
+                  [disabled]="!(!SignUpForm.get('emailFormControl').hasError('email') &&(!SignUpForm.get('emailFormControl').hasError('required'))&&(!DobControl.hasError('required')))">Next</button>
+              </div>
+            </div>
+          </mat-step>
+          <mat-step label="Password">
+            <div class="example-form h23">
+              <mat-form-field [style.width.%]=100 appearance="outline" class="example-full-width margin11" aria-label="Enter a new password"
+                hideRequiredMarker>
+                <mat-label>Enter a new password</mat-label>
+                <label>
+                  <input [(ngModel)]="password" [type]="hide ? 'password' :'text'" class="inputsize" matInput
+                    name="pswd" placeholder="Password" formControlName='passwordFormControl' required>
+                </label>
+                <mat-error *ngIf="SignUpForm.get('passwordFormControl').hasError('minlength')">Password should contain
+                  minimum <strong>8
+                    characters.</strong></mat-error>
+                <mat-error *ngIf="SignUpForm.get('passwordFormControl').hasError('required')">Enter a password.
+                </mat-error>
+                <mat-hint align="end"
+                  *ngIf="SignUpForm.get('passwordFormControl').hasError('pattern')&&!SignUpForm.get('passwordFormControl').hasError('maxlength')">
+                  Password
+                  will be <strong>stronger if it contain symbols or numbers.</strong></mat-hint>
+                <mat-hint align="end"
+                  *ngIf="!SignUpForm.get('passwordFormControl').hasError('pattern')||SignUpForm.get('passwordFormControl').hasError('maxlength')">
+                  <strong>Strong password.</strong></mat-hint>
+                <button (click)="hide = !hide" [attr.aria-label]="'hide password'" [attr.aria-pressed]="hide"
+                  mat-icon-button matSuffix>
+                  <mat-icon fontSet="material-icons-round">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </mat-form-field><br>
+              <mat-form-field [style.width.%]=100 appearance="outline" class="example-full-width margin11"
+                hideRequiredMarker aria-label="confirm password">
+                <mat-label>Confirm password</mat-label>
+                <label>
+                  <input [(ngModel)]="confirmPassword" [type]="hide ? 'password' :'text'" class="inputsize" matInput
+                    name="pswd" placeholder="Confirm Password" formControlName='passwordFormControl' required>
+                </label>
+                <mat-error *ngIf="SignUpForm.get('passwordFormControl').hasError('required')">Confirm your password.
+                </mat-error>
+                <mat-hint align="end" *ngIf="!(password == confirmPassword)">
+                  <strong>Passwords Not Matching.</strong>
+                </mat-hint>
+              </mat-form-field>
+            </div>
+            <div>
+              <div style="display: flex; justify-content:space-between;">
+                <button mat-stroked-button matStepperPrevious>Back</button>
+                <button (click)="createAcc()"
+                  [disabled]="((!SignUpForm.get('emailFormControl').hasError('email') && SignUpForm.get('emailFormControl').hasError('required')) || SignUpForm.get('nameFormControl').hasError('required'))||(SignUpForm.get('passwordFormControl').hasError('required')||SignUpForm.get('passwordFormControl').hasError('minlength'))"
+                  mat-raised-button color='accent' style="width:30%;">
+                  Sign Up
+                </button>
+              </div>
+            </div>
+          </mat-step>
+        </mat-horizontal-stepper>
+        <div class="padding" style="width:90%; text-align: center;">
+          <span>Already have an account?
+            <a routerLink="/login"> Login</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

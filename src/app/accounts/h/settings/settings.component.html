@@ -1,0 +1,57 @@
+<div class="full">
+  <div class="parent">
+    <div class="close">
+      <div style="display: flex;align-items: center;">
+        <button mat-icon-button (click)="closeBack()">
+          <ng-template [ngIf]="!this.authdata.c_b">
+            <mat-icon fontSet="material-icons-round">arrow_back</mat-icon>
+          </ng-template>
+          <ng-template [ngIf]="this.authdata.c_b">
+            <mat-icon fontSet="material-icons-round">close</mat-icon>
+          </ng-template>
+        </button>
+        <div class="text">
+          <span>Settings</span>
+        </div>
+      </div>
+      <button mat-icon-button (click)="this.as.SignOut()" matTooltip='Log Out'>
+        <mat-icon fontSet="material-icons-round">power_settings_new</mat-icon>
+      </button>
+    </div>
+    <ng-template [ngIf]="this.authdata.homeInitialize">
+      <div class="width">
+        <div>
+          <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="!this.authdata.homeInitialize">
+      <div class="p_content">
+        <div style="width: 29%;">
+          <div class="User">
+            <div>
+              <img [src]="this.authdata.heicsaUser.imgUrl">
+              <div class="nameEmail">
+                <span id="name">{{this.authdata.heicsaUser.name}}</span>
+                <span id="email">{{this.authdata.heicsaUser.email}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="settingsRouterLinks">
+            <nav>
+              <a routerLink='/settings/privacy' routerLinkActive='active' mat-ripple>Privacy</a>
+              <a routerLink='/settings/public' routerLinkActive='active' mat-ripple>Public</a>
+              <a  routerLinkActive='active' mat-ripple>Privacy</a>
+              <a  routerLinkActive='active' mat-ripple>Public</a><a
+                 routerLinkActive='active' mat-ripple>Privacy</a>
+              <a  routerLinkActive='active' mat-ripple>Public</a>
+            </nav>
+          </div>
+        </div>
+        <div id="settingsRouterOutlet">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

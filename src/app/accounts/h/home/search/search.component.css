@@ -1,0 +1,58 @@
+.input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+  padding-left: 0px;
+  position: relative;
+  background-color: aqua;
+  border-radius: 9px;
+  transition: width 600ms;
+}
+input{
+  width: 90%;
+  height: 100%;
+  font-size: 20px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  padding-left:10px;
+  transition: width 600ms;
+}
+.input_P{
+  width: 100%;
+  transition: width 600ms;
+}
+.autoComplete {
+  visibility: hidden;
+  position: absolute;
+  width: 100%;
+  background-color: aqua;
+  border-bottom-right-radius: 9px;
+  border-bottom-left-radius: 9px;
+  z-index: 200;
+  transition: width 600ms;
+}
+
+.autoCitems {
+  width: 90%;
+  padding: 7px;
+  font-size: 18px;
+  margin: 1px;
+}
+.autoCitems>div{
+  display: flex;
+  align-items: center;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  width: 100%;
+  height: 30px;
+  border-radius: 4px;
+  transition: height 300ms;
+}
+.autoCitems:hover div{
+  background-color: rgb(9, 209, 209);
+}
+.input_P:focus-within .autoComplete {
+  visibility: visible;
+}

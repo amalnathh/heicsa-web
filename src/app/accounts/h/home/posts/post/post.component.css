@@ -1,0 +1,56 @@
+.postsOuterMostContainer {
+  padding: 2px;
+  border: rgba(45, 59, 59, 0.637) solid 1px;
+  background-color: white;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width:fit-content;
+  /* width:550px; */
+}
+
+.container {
+  padding: 4px;
+}
+
+.container>div {
+  width: 100%;
+  height: 100%;
+}
+a{
+  text-decoration: none;
+  font-weight: bolder;
+  cursor: pointer;
+  color: black;
+}
+.middle {
+	display:flex;
+	justify-content:center;
+  padding: 3px;
+  margin-top:20px;
+  margin-bottom:7px;
+  width:100%;
+}
+
+.middle>img {
+  border-radius: 2px;
+}
+
+.Actions {
+  display: flex;
+justify-content:space-between;
+}
+
+.like, .comment, .share {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.UserIcon{
+  display: flex;
+  align-items: center;
+}
+.UserIcon>img{
+  margin-right: 8px;
+  border-radius:50%;
+}

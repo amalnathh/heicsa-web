@@ -1,0 +1,24 @@
+<div class="msg_out">
+    <div class="msg">
+        <div>
+            <div style="display: block;">
+                <span style="float: right;margin-right: 1em;">{{msgData.msg}}</span>
+            </div>
+            <div class="info">
+                <span>{{msgData.time}}</span>
+                <ng-template
+                    [ngIf]="msgData.status.owner.send&&!msgData.status.endUser.delivered&&!msgData.status.endUser.seen">
+                    <mat-icon fontSet="material-icons-round">done</mat-icon>
+                </ng-template>
+                <ng-template
+                    [ngIf]="msgData.status.owner.send&&msgData.status.endUser.delivered&&!msgData.status.endUser.seen">
+                    <mat-icon fontSet="material-icons-round">done_all</mat-icon>
+                </ng-template>
+                <ng-template
+                    [ngIf]="msgData.status.owner.send&&msgData.status.endUser.delivered&&msgData.status.endUser.seen">
+                    <mat-icon style="color: rgb(138, 172, 247);">done_all</mat-icon>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

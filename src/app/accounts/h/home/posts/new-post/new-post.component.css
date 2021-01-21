@@ -1,0 +1,88 @@
+.newPostParent {
+  width: 40%;
+  background-color: whitesmoke;
+  border-radius: 10px;
+}
+
+.newPostParent>div {
+  padding: 20px 10px;
+}
+
+.newPostParent>div>span {
+  cursor: pointer;
+}
+
+.parent_2 {
+  min-width: 90%;
+  min-height: 90%;
+  background-color: rgba(0, 0, 0, 0.483);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#blah{
+  max-height: 250px;
+  max-width: 350px;
+}
+.container {
+  background-color: whitesmoke;
+  border-radius: 10px;
+  min-height: 400px;
+  width: 500px;
+  overflow: hidden;
+}
+.priv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.image{
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container_close {
+  width: calc(100% - 10px);
+  height: 50px;
+  padding: 5px;
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+}
+.padding{
+  width:100%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.textArea {
+  text-align: center;
+}
+
+.width {
+  width: 85%;
+}
+.attach>div{
+  padding-bottom: 10px;
+}
+.dropzone{
+  border: 2px solid #454648;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.attach {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#margin{
+  margin: 10px;
+}

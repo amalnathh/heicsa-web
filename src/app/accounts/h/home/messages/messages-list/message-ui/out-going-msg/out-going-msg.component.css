@@ -1,0 +1,50 @@
+
+.msg_out {
+    float: right;
+    width: 70%;
+}
+.msg {
+    padding: 4px;
+    background-color: transparent;
+}
+.msg>span {
+    overflow-y: scroll;
+}
+.info {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 2px;
+    font-size: x-small;
+    width: 100%;
+}
+.info>mat-icon {
+    margin-left: 1px;
+    transform: scale(0.5);
+}
+.clr_blue {
+    color: rgb(153, 185, 255);
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: rgb(201, 201, 201);
+    border-radius: 3px;
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(146, 146, 146);
+}

@@ -1,0 +1,67 @@
+<div class="newPostParent">
+  <div (click)='postIdGenrate()' *ngIf='this.a else newPostUp' matRipple>
+    <span>Add a new post...</span>
+  </div>
+</div>
+<ng-template #newPostUp>
+  <div class="parent_2">
+    <div class="container">
+      <div class="container_close">
+        <div class="priv">
+          <button (click)='priv = !priv' mat-icon-button>
+            <div *ngIf="this.priv then private else public"></div>
+            <ng-template #private>
+              <mat-icon fontSet="material-icons-round">lock</mat-icon>
+            </ng-template>
+            <ng-template #public>
+              <mat-icon fontSet="material-icons-round">public</mat-icon>
+            </ng-template>
+          </button>
+        </div>
+        <div *ngIf="this.Loader" class="padding">
+          <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+        </div>
+        <button (click)="this.a=true" mat-icon-button>
+          <mat-icon fontSet="material-icons-round">close</mat-icon>
+        </button>
+      </div>
+      <div class="textArea">
+        <mat-form-field class="width">
+          <mat-label>Write something..</mat-label>
+          <label>
+            <textarea [(ngModel)]="Caption" matInput placeholder="Enter your text here..."></textarea>
+          </label>
+        </mat-form-field>
+      </div>
+      <div class="attach">
+
+        <div (dropped)="onDrop($event)" (hovered)="toggleHover($event)" [class.hovering]="isHovering" class="dropzone"
+             dropzone>
+          <p>Drag and Drop a File</p>
+          <div class="file">
+            <label class="file-label">
+              <input (change)="onDrop($event.target.files[0])" class="file-input" type="file">
+              <span class="file-cta">
+                <span class="file-icon">
+                  <mat-icon fontSet="material-icons-round">upload</mat-icon>
+                </span>
+                <span class="file-label">
+                  or choose a file…
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div *ngIf="this.running">
+          {{percentage}}
+          <button (click)="task.cancel()" [disabled]="this.running" class="button is-danger" mat-button>Cancel</button>
+        </div>
+      </div>
+      <div *ngIf="this.running" id='margin'>
+        <mat-progress-bar  [value]="this.percentage" mode="determinate" color='warn'></mat-progress-bar>
+      </div>
+      <button (click)="triggerPosting()" mat-button>Post</button>
+    </div>
+  </div>
+</ng-template>

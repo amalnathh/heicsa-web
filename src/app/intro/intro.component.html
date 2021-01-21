@@ -1,0 +1,36 @@
+<div *ngIf="this.LoginToHome;else login">
+  <div class="Loader">
+    <div class="bouncer">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</div>
+<ng-template #login>
+<div class="dfhd">
+  <div class="topBar">
+    <div class="rightSideBtn">
+      <button mat-raised-button>GitHub Repo</button>
+    </div>
+  </div>
+  <div class="djhbsd3">
+    <div>
+      <div class="kjsnks">
+        <div>
+          <span>heicsa.</span><br>
+          <div class="insideText">
+          <span>
+            This is the new <br> open source social media.
+          </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app_login">
+      <app-login></app-login>
+    </div>
+  </div>
+</div>
+</ng-template>

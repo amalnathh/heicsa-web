@@ -1,0 +1,38 @@
+<div class="Menu_parent">
+  <div>
+    <div class="UserInfo">
+      <div><img [src]="this.authdata.heicsaUser.imgUrl" width="50px" height="50px" alt="no_profile_image">
+      </div>
+      <div><span>{{this.authdata.heicsaUser.name}}</span></div>
+    </div>
+    <div class="menu_options">
+      <div matRipple>
+        <mat-icon fontSet="material-icons-round">save</mat-icon>
+        <div class="text">
+          <span>Saved</span>
+        </div>
+      </div>
+    </div>
+    <div class="menu_options" (click)='this.Dark=!this.Dark'>
+      <div matRipple class="mode">
+        <div>
+          <mat-icon fontSet="material-icons-round"><img src="assets/moon-solid.svg" alt="moon svg"></mat-icon>
+          <div class="text">
+            <span>Dark Mode</span>
+          </div>
+        </div>
+        <div>
+          <mat-slide-toggle [checked]='this.Dark'></mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+    <div class="menu_options">
+      <div matRipple (click)='navigate()'>
+        <mat-icon fontSet="material-icons-round">settings</mat-icon>
+        <div class="text">
+          <span>Settings</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

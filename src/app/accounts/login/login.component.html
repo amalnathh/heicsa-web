@@ -1,0 +1,94 @@
+<div class="parent">
+  <form [formGroup]="LoginForm">
+    <div class="content">
+      <div *ngIf="!forgetPswd else forgetPaswd" class="padding">
+        <div *ngIf="!this.authService.G_authReturn" id="mhd">
+          <mat-progress-spinner mode='indeterminate'></mat-progress-spinner>
+        </div>
+        <div *ngIf="this.authService.loginLoading">
+          <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+        </div>
+        <div class="example-form">
+          <mat-form-field [style.width.px]=260 appearance="outline" class="example-full-width margin10"
+            hideRequiredMarker>
+            <mat-label>Email</mat-label>
+            <label>
+              <input [(ngModel)]="email" [errorStateMatcher]="matcher" formControlName="emailFormControl"
+                class="inputsize" matInput name="emailidname" placeholder="henry@heicsa.com" required>
+            </label>
+            <mat-error
+              *ngIf="LoginForm.get('emailFormControl').hasError('email') && !LoginForm.get('emailFormControl').hasError('required')">
+              Please enter a valid email address.
+            </mat-error>
+            <mat-error *ngIf="LoginForm.get('emailFormControl').hasError('required')">
+              Please enter your <strong>email</strong>
+            </mat-error>
+          </mat-form-field>
+          <br>
+          <mat-form-field [style.width.px]=260 appearance="outline" class="example-full-width margin11" color="blue"
+            hideRequiredMarker>
+            <mat-label>Enter your password</mat-label>
+            <label>
+              <input [(ngModel)]="password" [type]="hide ? 'password' :'text'" class="inputsize" matInput
+                name="emailidpswd" placeholder="Password" formControlName="passwordFormControl" required>
+            </label>
+            <mat-error *ngIf="LoginForm.get('passwordFormControl').hasError('required')">Please enter your
+              <strong>Password</strong>
+            </mat-error>
+            <button (click)="hide = !hide" [attr.aria-label]="'hide password'" [attr.aria-pressed]="hide"
+              mat-icon-button matSuffix>
+              <mat-icon fontSet="material-icons-round">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div style="width: 100%;display: flex;justify-content: center; padding-bottom: 20px;">
+          <button (click)="loginAcc()"
+            [disabled]="(LoginForm.get('emailFormControl').hasError('email') && !LoginForm.get('emailFormControl').hasError('required'))||
+        LoginForm.get('emailFormControl').hasError('required')||LoginForm.get('passwordFormControl').hasError('required')" mat-flat-button>
+            Login
+          </button>
+        </div>
+        <div style="width: 100%; ">
+          <span (click)="forgetPswd = true" class="furpass">forgot your password?</span>
+          <button mat-raised-button (click)='authService.SignUpWithGoogle()' class="floatright">
+            <div id="btng"><img src="assets/icons/google-brands.svg" width="17px" height="17px"
+                style="line-height: 36px"> SignIn</div>
+          </button>
+        </div>
+        <div class="signuptxt">or <a routerLink="/signup">Sign Up</a></div>
+      </div>
+      <ng-template #forgetPaswd>
+        <div class="padding">
+          <div *ngIf="emailLoader" class="d23h">
+            <mat-progress-bar color="primary" mode="indeterminate"></mat-progress-bar>
+          </div>
+          <mat-form-field [style.width.px]=260 appearance="outline" class="example-full-width margin10"
+            hideRequiredMarker>
+            <mat-label>Email</mat-label>
+            <label>
+              <input [(ngModel)]="frPswEmail" [errorStateMatcher]="matcher" formControlName="emailFormControl"
+                class="inputsize" matInput name="frPswEmail" placeholder="pat@example.com" required>
+            </label>
+            <mat-error
+              *ngIf="LoginForm.get('emailFormControl').hasError('email') && !LoginForm.get('emailFormControl').hasError('required')">
+              Please enter a <strong>valid email address.</strong>.
+            </mat-error>
+            <mat-error *ngIf="LoginForm.get('emailFormControl').hasError('required')">
+              Please enter your <strong>email.</strong>.
+            </mat-error>
+          </mat-form-field>
+          <div class="rc2b">
+            <button (click)="SendRsetMail()" [disabled]="(LoginForm.get('emailFormControl').hasError('email') &&
+        !LoginForm.get('emailFormControl').hasError('required')) ||
+        LoginForm.get('emailFormControl').hasError('required')" mat-raised-button>Send Password Reset Link
+            </button>
+          </div>
+          <div class="rc2b"><button mat-stroked-button (click)="forgetPswd=false">
+              <mat-icon fontSet="material-icons-round">keyboard_backspace</mat-icon> Login
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </form>
+</div>

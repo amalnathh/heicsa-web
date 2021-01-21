@@ -1,0 +1,35 @@
+<div class="postsOuterMostContainer">
+  <div class="container">
+    <div>
+      <div class="topBar">
+        <div class="UserIcon">
+          <img [src]="this.imgUrl" width="52px" height="53px">
+          <span>
+            <a [routerLink]="this.post.ownerDetails.uIdRef">{{this.userName}}</a>
+            <mat-icon fontSet="material-icons-round">privacy</mat-icon>
+          </span>
+          <img src='assets/icons/arrow_right-24px.svg'>
+          <span>
+            <a [routerLink]='this.post.ownerDetails.postedTo.group.groupId'>{{this.groupname}}</a>
+          </span>
+        </div>
+      </div>
+      <ng-template [ngIf]='this.post.hasImg'>
+        <div class="middle">
+          <img [src]="this.post.postDetails.postedPicUrl">
+        </div>
+      </ng-template>
+      <div class="Actions">
+        <div class="like">
+          <button mat-flat-button>Like</button>
+        </div>
+        <div class="comment">
+          <button mat-flat-button>Comment</button>
+        </div>
+        <div class="share">
+          <button mat-flat-button>Share</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
