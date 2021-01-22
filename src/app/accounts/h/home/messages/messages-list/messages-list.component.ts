@@ -12,6 +12,7 @@ export class MessagesListComponent implements OnInit {
   friend: [{ imgUrl: string, name: string, uid: string }];
   b: any;
   uid: string;
+
   constructor(hu: AuthData) {
     if (hu.heicsaUser) {
       firestore().doc(`accounts/${hu.heicsaUser.uId}/UserData/private`).get().then((result) => {

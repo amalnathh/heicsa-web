@@ -64,3 +64,9 @@ node_modules/
 
 # dotenv environment variables file
 .env
+src/environment/
+.idea/
+dist/
+database.rules.json
+functions/
+*.rules

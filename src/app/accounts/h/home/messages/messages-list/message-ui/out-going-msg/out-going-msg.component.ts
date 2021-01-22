@@ -6,7 +6,7 @@ import { MessageData } from '../message-ui.component';
   styleUrls: ['./out-going-msg.component.css']
 })
 export class OutGoingMsgComponent implements OnInit {
-@Input() 'msgData':MessageData
+  @Input() 'msgData': MessageData
   constructor() { }
 
   ngOnInit(): void {

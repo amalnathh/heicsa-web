@@ -12,7 +12,7 @@ export class IncommingMsgComponent implements OnInit {
   @HostListener('window.onload', ['$event'])
   msgRead() {
     console.log('msg seen')
-    this.msgData.status.endUser.seen = true;
+    this.msgData.s.e.s = true;
   }
 
   ngOnInit(): void {
