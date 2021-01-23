@@ -7,27 +7,29 @@
     </div>
     <div class="flexContainer">
         <section class="messages_area">
-            <ng-template  let-messages [ngForOf]="timeLineOfMessages" ngFor>
-                <ng-template [ngIf]="inOut(messages.s.o.I)">
-                    <out-going-msg [msgData]="messages"></out-going-msg>
+            <div>
+                <ng-template let-messages [ngForOf]="timeLineOfMessages" ngFor>
+                    <ng-template [ngIf]="inOut(messages.s.o.I)">
+                        <out-going-msg [msgData]="messages"></out-going-msg>
+                    </ng-template>
+                    <ng-template [ngIf]="!inOut(messages.s.o.I)">
+                        <incomming-msg [msgData]="messages"></incomming-msg>
+                    </ng-template>
                 </ng-template>
-                <ng-template [ngIf]="!inOut(messages.s.o.I)">
-                    <incomming-msg [msgData]="messages"></incomming-msg>
-                </ng-template>
-            </ng-template>
+            </div>
         </section>
         <section class="message_input">
             <div class="padding">
                 <mat-form-field [style.width.px]=450 appearance="outline">
                     <mat-label>Message</mat-label>
                     <label>
-                       <textarea [(ngModel)]="msgToSend" matAutosizeMaxRows=6 matAutosizeMinRows=1
-                                 matInput matTextareaAutosize name="message" type="text">
+                        <textarea [(ngModel)]="msgToSend" matAutosizeMaxRows=6 matAutosizeMinRows=1 matInput
+                            matTextareaAutosize name="message" type="text">
                        </textarea>
                     </label>
                 </mat-form-field>
                 <div style="padding-bottom: 20px;">
-                    <button mat-icon-button matSuffix>
+                    <button mat-icon-button matSuffix (click)="SendMessage()">
                         <mat-icon fontSet="material-icons-round">send</mat-icon>
                     </button>
                 </div>

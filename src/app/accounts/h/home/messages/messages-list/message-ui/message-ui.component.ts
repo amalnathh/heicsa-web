@@ -1,11 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { database } from 'firebase';
 import { AuthData, AuthService } from '../../../../../services/auth.service';
 
 export interface MessageData {
     m: string;
     s: {
         o: { s: boolean; I: number };
-        e: { d: boolean; s: boolean; t: boolean };
+        e: { d: boolean; s: boolean };
     };
     t: number;
 }
@@ -30,8 +31,7 @@ export class MessageUiComponent implements OnInit {
                 },
                 e: {
                     d: false,
-                    s: false,
-                    t: false
+                    s: false
                 },
             },
             t: 2435
@@ -45,8 +45,7 @@ export class MessageUiComponent implements OnInit {
                 },
                 e: {
                     d: true,
-                    s: true,
-                    t: false
+                    s: true
                 },
             },
             t: 2463
@@ -60,8 +59,7 @@ export class MessageUiComponent implements OnInit {
                 },
                 e: {
                     d: false,
-                    s: false,
-                    t: false
+                    s: false
                 },
             },
             t: 2398
@@ -75,8 +73,7 @@ export class MessageUiComponent implements OnInit {
                 },
                 e: {
                     d: true,
-                    s: true,
-                    t: false
+                    s: true
                 },
             },
             t: 2233
@@ -117,25 +114,38 @@ export class MessageUiComponent implements OnInit {
         return (m === this.thisUserIdentifier);
     }
 
-    // @HostListener('window:keydown.control.enter', ['$event'])
-    // sendShortCut(event: KeyboardEvent) {
-    //     event.preventDefault();
-    //     this.SendMessage(this.message);
-    //     console.log('enna myre bheeshani aano aa oombikooo')
-    // }
-    // // tslint:disable-next-line:typedef
-    // msg() {
-    //     this.SendMessage(this.message).then(() => {
-    //         this.send = true;
-    //     });
-    // }
-    // async SendMessage(mesg: string): Promise<void> {
-    //     try {
-    //         await database().ref(`accounts/message/${this.chatID}`).set(messages);
-    //     } catch (e) {
-    //         console.log(e.message);
-    //     }
-    // }
+    @HostListener('window:keydown.control.enter', ['$event'])
+    sendShortCut(event: KeyboardEvent) {
+        event.preventDefault();
+        this.SendMessage(this.msgToSend);
+        console.log('enna myre bheeshani aano aa oombikooo')
+    }
+    // tslint:disable-next-line:typedef
+    async msg() {
+      await this.SendMessage(this.msgToSend)
+    }
+    async SendMessage(mesg: string): Promise<void> {
+        try {
+            let md:MessageData;
+            md = {
+                m:mesg,
+                s:{
+                    o: {
+                        s: true,
+                        I: this.thisUserIdentifier
+                    },
+                    e:{
+                        d:false,
+                        s:false,
+                    }
+                },
+                t:Date.now()
+            }
+            await database().ref(`accounts/message/${this.chatID}`).set(md);
+        } catch (e) {
+            console.log(e.message);
+        }
+    }
     ngOnInit(): void {
     }
 }
