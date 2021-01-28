@@ -1,13 +1,11 @@
 <ng-template [ngIf]='!dbLoad'>
     <div class="fullWidth">
-        <div><mat-progress-bar mode='indeterminate'></mat-progress-bar></div>
+        <div>
+            <mat-progress-bar mode='indeterminate'></mat-progress-bar>
+        </div>
     </div>
 </ng-template>
 <ng-template [ngIf]='dbLoad'>
-    <!-- <img [src]="userDETAILS.imgUrl">
-    <h2>{{userDETAILS.name}}</h2>
-    <button (click)="msgREQ()">Message</button>
-    <app-message-ui [chatID]='msgREQ()'></app-message-ui> -->
     <div class="parent">
         <div class="photoName">
             <img [src]="userDETAILS.imgUrl">
@@ -19,9 +17,10 @@
                     <mat-icon fontSet="material-icons-round">add</mat-icon>
                 </ng-template>
                 <ng-template [ngIf]='reqSend'>
-                    <mat-icon fontSet="material-icons-round">tick</mat-icon>
+                    <mat-icon fontSet="material-icons-round">done</mat-icon>
                 </ng-template>
             </button>
         </div>
+        <button mat-button (click)="this.msgthisUser = true">Message</button>
     </div>
 </ng-template>

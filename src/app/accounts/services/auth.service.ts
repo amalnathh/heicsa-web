@@ -34,18 +34,9 @@ export class AuthService {
         try {
             await auth()
                 .setPersistence(auth.Auth.Persistence.LOCAL)
-                .then(() => {
-                    return auth().signInWithEmailAndPassword(email, password).then(
-                        () => {
-                            auth().onAuthStateChanged((user) => {
-                                if (user) {
-                                    localStorage.setItem('user', JSON.stringify(user));
-                                } else {
-                                    this.router.navigate(['/login']);
-                                }
-                            });
-                        }
-                    );
+                .then(async () => {
+                    const r = await auth().signInWithEmailAndPassword(email, password);
+                    localStorage.setItem('user', JSON.stringify(r.user));
                 });
             this.loginLoading = false;
             await this.ngZone.run(async () => {
@@ -61,8 +52,8 @@ export class AuthService {
     async SignUp(email: string, password: string, username: string, displayName: string, dateOfBirth: any): Promise<void> {
         this.signupLoading = true;
         try {
-            const result = await auth()
-                .createUserWithEmailAndPassword(email, password);
+            const result = await auth().createUserWithEmailAndPassword(email, password);
+            localStorage.setItem('user', JSON.stringify(result.user));
             await this.SendVerificationMail();
             await result.user.updateProfile({
                 displayName
@@ -72,8 +63,8 @@ export class AuthService {
                 imgUrl: result.user.photoURL,
                 uid: result.user.uid
             };
-            await database().ref(`usernames/${displayName}`).set(this.nameInfo);
-            await firestore().doc(`heicsa/${result.user.uid}/userdata/private`).set(dateOfBirth);
+            await database().ref(`usernames/${username}`).set(this.nameInfo);
+            await firestore().doc(`heicsa/${result.user.uid}/userdata/private`).set({dob:dateOfBirth,username:username});
             this.snackbarBool = true;
             this.snackBarError = 'Account created successfully 🤗';
             await this.router.navigateByUrl('/home');
@@ -96,7 +87,6 @@ export class AuthService {
                     localStorage.setItem('user', JSON.stringify(result.user));
                     console.log(result.user.metadata.lastSignInTime);
                     console.log(result.user.metadata.creationTime);
-                    //
                     if (result.user.metadata.lastSignInTime === result.user.metadata.creationTime) {
                         console.log('first time');
                         this.nameInfo = {
@@ -109,12 +99,6 @@ export class AuthService {
                             await database().ref(`usernames/${usernameGoogle}`).set(this.nameInfo);
                         } catch (e) {
                             console.log(e.message)
-                        }
-                        try {
-                            let publicData = {username: usernameGoogle};
-                            await firestore().collection(`heicsa/${result.user.uid}/userdata/`).add(publicData);
-                        } catch (e) {
-                            console.log(e.message);
                         }
                     }
                 })

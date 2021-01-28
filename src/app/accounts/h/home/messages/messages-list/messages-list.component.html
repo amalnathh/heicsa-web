@@ -1,17 +1,18 @@
 <div class="parent_block">
   <div *ngFor="let chats of friend;index as i;">
-    <div class="image"><img [src]="chats.imgUrl" [alt]="chats.name+ '_image'"></div>
-    <div class="name">{{chats.name}}</div>
-    <div class="lastMsgUreadMsgBlock_parent">
-      <div class="last_Msg"></div>
-      <div class="badge"></div>
+    <div class="friends" (click)="Fa26gsa(chats)">
+      <div>
+        <div class="image">
+          <img [src]="(chats.imgUrl == null)?'assets/app/home/astronaut.png':chats.imgUrl"
+            [alt]="chats.name+ '_image'">
+        </div>
+        <div class="nameD">
+          <div class="name">{{chats.name}}</div>
+          <div class="lastMsgUreadMsgBlock_parent">
+            <div class="last_Msg">{{chats.lastMsg}}</div>
+            <div class="badge">{{timeReturn(chats.time)}}</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <app-message-ui [chatID]='chatID(uid,chats.uid)'></app-message-ui>
   </div>
-</div>
-<!--
-from let friend of friends we will take the element friend[0]
-and then the corresponding userid is found by return fn and
-then my uid and the returned uid is appended ascending order and
-it then points to the msg db.
- -->

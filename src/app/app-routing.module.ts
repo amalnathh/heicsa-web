@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import * as guard from './auth.guard';
+import { SignoutComponent } from './signout/signout.component';
 
 const routes: Routes = [
   {
@@ -28,11 +29,12 @@ const routes: Routes = [
   },
   {
     path: 'messages',
-    loadChildren: () => import('./accounts/h/home/messages/messages.module').then((m) => m.MessagesModule) 
+    loadChildren: () => import('./accounts/h/home/messages/messages.module').then((m) => m.MessagesModule)
+  },
+  {
+    path: 'signout', component: SignoutComponent
   }
-
 ];
-//'./accounts/h/home/messages/messages.module').then((m) => m.MessagesModule)
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

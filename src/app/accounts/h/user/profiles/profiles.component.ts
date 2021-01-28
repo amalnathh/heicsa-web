@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { database } from 'firebase';
+import { database, firestore } from 'firebase';
 import { AuthData } from "../../../services/auth.service";
 @Component({
   selector: 'app-profiles',
@@ -14,28 +14,25 @@ export class ProfilesComponent implements OnInit {
   chatID: string;
   dbLoad = false;
   reqSend = false;
+  msgthisuser = false;
   constructor(private router: Router, private aRoute: ActivatedRoute, private ad: AuthData) {
     this.sub = this.aRoute.params.subscribe(params => {
       this.id = params['id'];
       console.log(this.id);
     });
-  }
-  msgREQ():string {
-    if (this.userDETAILS.uid < this.ad.heicsaUser.uId) {
-      return this.userDETAILS.uid + '_' + this.ad.heicsaUser.uId;
-    } else {
-      return this.ad.heicsaUser.uId + '_' + this.userDETAILS.uid;
-    }
-  }
-  req(){
-    return 2;
-  }
-  ngOnInit() {
     database().ref(`usernames/${this.id}`).once('value', (v) => {
+      console.log('success')
       this.userDETAILS = v.val();
     }).then(() => {
       this.dbLoad = true;
     })
+  }
+  
+  req() {
+    firestore().doc(`heicsa/${this.ad.heicsaUser.uId}/userdata/private`).set({ messages: [this.id] }).then(() => { this.reqSend = true; })
+  }
+  ngOnInit() {
+
   }
 
   ngOnDestroy() {

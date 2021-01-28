@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, FormGroupDirective, NgForm, Validators,} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
-import {AuthService} from '../services/auth.service';
-import {Router} from '@angular/router';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {firestore} from 'firebase';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators, } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { database } from 'firebase';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
     isErrorState(
@@ -60,14 +60,29 @@ export class SignupComponent implements OnInit {
     displayName = this.firstName + this.lastName;
     DateOfBirth: Date;
     minDate = new Date(1900, 1, 1);
-    maxDate = new Date(2010, 12, 12);
+    maxDate = new Date(2006, 12, 12);
     action = 'ok';
-
+    usernameAvailable = false;
     constructor(public authService: AuthService, public router: Router, private _snackBar: MatSnackBar) {
     }
 
     usernameCheck() {
-        return (firestore().doc(`userRef/${this.username}`) == null);
+        setTimeout(() => {
+            console.log('username check');
+            try {
+                database().ref(`usernames/${this.username}`).once('value', (s) => {
+                    if ((s.val() != null) || (s.val() != undefined)) {
+                        this.usernameAvailable = false;
+                        console.log('username false');
+                    } else {
+                        this.usernameAvailable = true;
+                        console.log('username true');
+                    }
+                })
+            } catch (e) {
+                console.log('Username', e)
+            }
+        }, 2000);
     }
 
     async createAcc() {

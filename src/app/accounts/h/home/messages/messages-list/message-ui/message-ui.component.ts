@@ -1,12 +1,20 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { database } from 'firebase';
-import { AuthData, AuthService } from '../../../../../services/auth.service';
-
+import { AuthData } from '../../../../../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { Random } from '../../../../../services/random.service';
+import * as crypto from 'crypto-js';
 export interface MessageData {
     m: string;
     s: {
-        o: { s: boolean; I: number };
-        e: { d: boolean; s: boolean };
+        o: {
+            s: boolean;
+            I: number
+        };
+        e: {
+            d: boolean;
+            s: boolean
+        };
     };
     t: number;
 }
@@ -16,136 +24,108 @@ export interface MessageData {
     templateUrl: './message-ui.component.html',
     styleUrls: ['./message-ui.component.css']
 })
-export class MessageUiComponent implements OnInit {
-    @Input() 'chatID': string;
+export class MessageUiComponent implements OnInit, OnChanges {
+
+    @Input() 'endUser': { imgUrl?: string, name: string, uid: string };
+
+    @ViewChild('msgIn', { static: false })
+    msgIn: ElementRef;
+
+    msgsView: void;
+    sub: any;
+    mLoadingEnded = false;
+    paramData: any;
+
+    constructor(private data: AuthData, aRoute: ActivatedRoute, Random: Random) {
+        this.sub = aRoute.params.subscribe(params => {
+            this.paramData = params.enData.toString().replace(/p1L2u3S/g, '+').replace(/s1L2a3S4h/g, '/').replace(/e1Q2u3A4l/g, '=');
+        });
+        let endata: any = crypto.AES.decrypt(this.paramData.toString(), Random.setKey());
+        this.endUser = JSON.parse(endata.toString(crypto.enc.Utf8));
+        this.mLoadingEnded = true;
+        if (data.heicsaUser.uId > this.endUser.uid) {
+            this.thisUserIdentifier = 1;
+        } else {
+            this.thisUserIdentifier = 2;
+        }
+    }
 
     md: MessageData;
     msgToSend: string;
-    timeLineOfMessages = [
-        {
-            m: 'hehe',
-            s: {
-                o: {
-                    s: true,
-                    I: 2
-                },
-                e: {
-                    d: false,
-                    s: false
-                },
-            },
-            t: 2435
-        },
-        {
-            m: 'hehehe enna ondeda',
-            s: {
-                o: {
-                    s: true,
-                    I: 1
-                },
-                e: {
-                    d: true,
-                    s: true
-                },
-            },
-            t: 2463
-        },
-        {
-            m: 'haa ange ponu',
-            s: {
-                o: {
-                    s: true,
-                    I: 2
-                },
-                e: {
-                    d: false,
-                    s: false
-                },
-            },
-            t: 2398
-        },
-        {
-            m: 'hahaha',
-            s: {
-                o: {
-                    s: true,
-                    I: 1
-                },
-                e: {
-                    d: true,
-                    s: true
-                },
-            },
-            t: 2233
-        }
-    ]
-    len: number;
-    uds: number;
-    id1: string;
-    id2: string;
+    timeLineOfMessages = [];
     private readonly thisUserIdentifier: number;
-
-    constructor(data: AuthData, service: AuthService) {
-        this.timeLineOfMessages.sort(Number)
-        this.chatID = data.heicsaUser.uId + '_8janHHkaFr82hLaUkH';
-        this.len = this.chatID.length;
-        this.uds = this.chatID.indexOf('_');
-        this.id1 = this.chatID.slice(0, this.uds);
-        this.id2 = this.chatID.slice((this.uds + 1), this.len);
-        console.log(this.id2 + '  ' + this.id1);
-        if (this.id1 === data.heicsaUser.uId) {
-            if (data.heicsaUser.uId > this.id2) {
-                this.thisUserIdentifier = 1;
-            } else {
-                this.thisUserIdentifier = 2;
-            }
-        } else if (this.id2 === data.heicsaUser.uId) {
-            if (data.heicsaUser.uId > this.id1) {
-                this.thisUserIdentifier = 1;
-            } else {
-                this.thisUserIdentifier = 2;
-            }
-        } else {
-            service.SignOut();
-        }
-    }
+    feed: any;
 
     inOut(m: number): boolean {
         return (m === this.thisUserIdentifier);
     }
 
     @HostListener('window:keydown.control.enter', ['$event'])
-    sendShortCut(event: KeyboardEvent) {
+    sendShortCut(event: KeyboardEvent): void {
         event.preventDefault();
-        this.SendMessage(this.msgToSend);
-        console.log('enna myre bheeshani aano aa oombikooo')
+        this.msg(this.msgIn.nativeElement.value);
     }
+
+    reset(): void {
+        this.msgIn.nativeElement.value = '';
+    }
+
     // tslint:disable-next-line:typedef
-    async msg() {
-      await this.SendMessage(this.msgToSend)
+    async msg(a: string) {
+        if ((a === '') || (a === null) || (a === undefined)) {
+        } else {
+            await this.SendMessage(a);
+        }
     }
-    async SendMessage(mesg: string): Promise<void> {
+
+    async SendMessage(g: string): Promise<void> {
         try {
-            let md:MessageData;
+            let md: MessageData;
             md = {
-                m:mesg,
-                s:{
+                m: g,
+                s: {
                     o: {
                         s: true,
                         I: this.thisUserIdentifier
                     },
-                    e:{
-                        d:false,
-                        s:false,
+                    e: {
+                        d: false,
+                        s: false,
                     }
                 },
-                t:Date.now()
-            }
-            await database().ref(`accounts/message/${this.chatID}`).set(md);
+                t: Date.now()
+            };
+            this.reset();
+            await database().ref(`messages/${this.ucID(this.data.heicsaUser.uId, this.endUser.uid)}/${md.t}`).set(md);
         } catch (e) {
             console.log(e.message);
         }
     }
+    ucID(a: string, b: string) {
+        return (a > b) ? (a + '_' + b) : (b + '_' + a);
+    }
+
+    timeReturn(ts:any): string {
+        var date_ob = new Date(ts);
+        var hours = ("0" + date_ob.getHours()).slice(-2)
+        var minutes = ("0" + date_ob.getMinutes()).slice(-2);
+        var seconds = ("0" + date_ob.getSeconds()).slice(-2);
+        return `${hours} + " : " + ${minutes}`
+    }
+    getMessages(): void {
+        database()
+            .ref(`/messages/${this.ucID(this.data.heicsaUser.uId, this.endUser.uid)}`)
+            .limitToLast(25)
+            .on('value', (s) => {
+                this.timeLineOfMessages = Object.values(s.val());
+            });
+    }
+
     ngOnInit(): void {
+        this.msgsView = this.getMessages();
+    }
+
+    ngOnChanges(): void {
+        this.msgsView = this.getMessages();
     }
 }

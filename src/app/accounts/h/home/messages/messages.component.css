@@ -1,0 +1,22 @@
+.parent_MessagesModule{
+    width: 100vw;
+    height: 100vh;
+}
+.parent_MessagesModule>div{
+    padding: 20px;
+ display: block;
+}
+.messagesList{
+    height: 100%;
+    width: 30%;
+    padding: 10px;
+    float: left;
+    background-color: whitesmoke;
+}
+.messagesBox{
+    height: 100%;
+    width: 70%;
+    padding: 10px;
+    float: right;
+    background-color: rgb(216, 221, 226);
+}

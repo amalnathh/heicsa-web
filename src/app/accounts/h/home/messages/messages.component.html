@@ -1,2 +1,10 @@
-<app-messages-list></app-messages-list>
-<app-message-ui></app-message-ui>
+<div class="parent_MessagesModule">
+    <div>
+     <section class="messagesList">
+        <app-messages-list></app-messages-list>
+     </section>
+     <section class="messagingBox">
+        <router-outlet></router-outlet>
+     </section>
+    </div>
+</div>

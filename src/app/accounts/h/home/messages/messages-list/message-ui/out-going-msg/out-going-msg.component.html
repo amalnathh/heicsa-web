@@ -5,7 +5,7 @@
                 <span style="float: right;margin-right: 1em;">{{msgData.m}}</span>
             </div>
             <div class="info">
-                <span>{{msgData.t}}</span>
+                <span>{{timeReturn(msgData.t)}}</span>
                 <ng-template
                     [ngIf]="msgData.s.o.s&&!msgData.s.e.d&&!msgData.s.e.s">
                     <mat-icon fontSet="material-icons-round">done</mat-icon>

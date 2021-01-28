@@ -16,7 +16,6 @@ export class IntroComponent implements OnInit {
   ngOnInit(): void {
     auth().onAuthStateChanged((user) => {
       if (user) {
-        user.providerData
         this.router.navigateByUrl('/home').then(r => {
           this.LoginToHome = false;
         });

@@ -46,11 +46,11 @@
                     <b>Username should be less than 14 characters</b>
                   </span>
                 </mat-error>
-                <mat-hint *ngIf="!usernameCheck()">
+                <mat-hint *ngIf="!usernameAvailable">
                   <span style="color: rgb(255, 74, 74);">Username is <b>not available</b>.</span>
                 </mat-hint>
                 <mat-hint
-                  *ngIf="(usernameCheck())&&(!SignUpForm.get('userNameFormControl').hasError('maxlength'))&&!SignUpForm.get('userNameFormControl').hasError('minlength')&&(!SignUpForm.get('userNameFormControl').hasError('required'))">
+                  *ngIf="(usernameAvailable)&&(!SignUpForm.get('userNameFormControl').hasError('maxlength'))&&!SignUpForm.get('userNameFormControl').hasError('minlength')&&(!SignUpForm.get('userNameFormControl').hasError('required'))">
                   <span style="color: rgb(28, 110, 17);">Username is <b>available</b>.</span>
                 </mat-hint>
               </mat-form-field><br>

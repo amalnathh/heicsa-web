@@ -10,11 +10,12 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment, firebaseConfig } from '../environments/environment';
 import { AccountsRoutingModule} from './accounts/accounts-routing.module';
 import { initializeApp } from 'firebase';
+import { SignoutComponent } from './signout/signout.component';
 
 
 initializeApp(firebaseConfig);
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, SignoutComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
