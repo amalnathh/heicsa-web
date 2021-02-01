@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, ViewChild ,OnDestroy} from '@angular/core';
 import { database } from 'firebase';
 import { AuthData } from '../../../../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
@@ -25,17 +25,14 @@ export interface MessageData {
     styleUrls: ['./message-ui.component.css']
 })
 export class MessageUiComponent implements OnInit, OnChanges {
-
     @Input() 'endUser': { imgUrl?: string, name: string, uid: string };
-
     @ViewChild('msgIn', { static: false })
     msgIn: ElementRef;
-
     msgsView: void;
     sub: any;
     mLoadingEnded = false;
     paramData: any;
-
+    MessagesListLS = JSON.parse(localStorage.getItem('MessagesList'));
     constructor(private data: AuthData, aRoute: ActivatedRoute, Random: Random) {
         this.sub = aRoute.params.subscribe(params => {
             this.paramData = params.enData.toString().replace(/p1L2u3S/g, '+').replace(/s1L2a3S4h/g, '/').replace(/e1Q2u3A4l/g, '=');
@@ -60,7 +57,7 @@ export class MessageUiComponent implements OnInit, OnChanges {
         return (m === this.thisUserIdentifier);
     }
 
-    @HostListener('window:keydown.control.enter', ['$event'])
+    @HostListener('window:keydown.enter', ['$event'])
     sendShortCut(event: KeyboardEvent): void {
         event.preventDefault();
         this.msg(this.msgIn.nativeElement.value);
@@ -77,7 +74,6 @@ export class MessageUiComponent implements OnInit, OnChanges {
             await this.SendMessage(a);
         }
     }
-
     async SendMessage(g: string): Promise<void> {
         try {
             let md: MessageData;
@@ -105,20 +101,54 @@ export class MessageUiComponent implements OnInit, OnChanges {
         return (a > b) ? (a + '_' + b) : (b + '_' + a);
     }
 
-    timeReturn(ts:any): string {
+    timeReturn(ts: any): string {
         var date_ob = new Date(ts);
-        var hours = ("0" + date_ob.getHours()).slice(-2)
+        var hours = ("0" + date_ob.getHours()).slice(-2);
         var minutes = ("0" + date_ob.getMinutes()).slice(-2);
         var seconds = ("0" + date_ob.getSeconds()).slice(-2);
-        return `${hours} + " : " + ${minutes}`
+        return `${hours}:${minutes}`
     }
     getMessages(): void {
-        database()
+        if (this.timeLineOfMessages.length === 0) { 
+            database()
             .ref(`/messages/${this.ucID(this.data.heicsaUser.uId, this.endUser.uid)}`)
             .limitToLast(25)
-            .on('value', (s) => {
-                this.timeLineOfMessages = Object.values(s.val());
+            .once('value', (s) => {
+                if (s.val() == null) {
+                    this.timeLineOfMessages = [{
+                        m: 'send a msg',
+                        s: {
+                            o: {
+                                s: true,
+                                I: 1
+                            },
+                            e: {
+                                d: false,
+                                s: false,
+                            }
+                        },
+                        t: Date.now()
+                    }]
+                } else {
+                    console.log(s.val());
+                    let dataI25a = Object.values(s.val());
+                    for(let i=0;i<(dataI25a.length-2);i++){
+                        this.timeLineOfMessages.push(dataI25a[i])
+                    }
+                }
             });
+        } 
+           database()
+            .ref(`/messages/${this.ucID(this.data.heicsaUser.uId, this.endUser.uid)}`)
+            .limitToLast(1)
+            .on('value', (data) => {
+                console.log(Object.values(data.val()))
+                let d = Object.values(data.val())
+                for(let i=0;i<d.length;i++){
+                   this.timeLineOfMessages.push(d[i]);
+                }
+            });
+     
     }
 
     ngOnInit(): void {
@@ -127,5 +157,10 @@ export class MessageUiComponent implements OnInit, OnChanges {
 
     ngOnChanges(): void {
         this.msgsView = this.getMessages();
+    }
+    ngOnDestroy(){
+if(this.sub != null) {
+    this.sub.unsubscribe();
+  }
     }
 }

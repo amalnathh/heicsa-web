@@ -1,14 +1,14 @@
 <ng-template [ngIf]="!this.mLoadingEnded">
-<div class="flexContianer">
-    <div>
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    <div style="height: 93vh;display: flex;justify-content: center;">
+        <div>
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
     </div>
-</div>
 </ng-template>
 <ng-template [ngIf]="this.mLoadingEnded">
-<div class="parent_Message">
+    <div class="parent_Message">
         <div class="top">
-            <div class="name"><span></span></div>
+            <div class="name"><span>{{endUser.name}}</span></div>
             <div class="pic">
                 <!-- <img [alt]="userImage" [src]="this.url" width="50px" height="50px" class="pic_image"> -->
             </div>
@@ -28,7 +28,7 @@
             </div>
             <div class="message_input">
                 <div class="padding">
-                    <mat-form-field [style.width.px]=450 appearance="outline">
+                    <mat-form-field [style.width.%]=100 appearance="outline">
                         <mat-label>Message</mat-label>
                         <label>
                             <textarea [(ngModel)]="msgToSend" matAutosizeMaxRows=6 matAutosizeMinRows=1 matInput
@@ -36,13 +36,13 @@
                            </textarea>
                         </label>
                     </mat-form-field>
-                    <div style="padding-bottom: 20px;">
-                        <button mat-icon-button matSuffix (click)="msg(msgIn.value)" matTooltip='ctrl + enter'>
+                    <div style="padding-bottom: 20px; display: flex; align-items: center; height: 64px;">
+                        <button mat-icon-button matSuffix (click)="msg(msgIn.value)" matTooltip='Enter'>
                             <mat-icon fontSet="material-icons-round">send</mat-icon>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-</div>
+    </div>
 </ng-template>

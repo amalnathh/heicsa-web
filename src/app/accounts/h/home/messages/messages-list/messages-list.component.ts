@@ -28,18 +28,18 @@ export class MessagesListComponent implements OnInit {
         console.log(hu.heicsaUser.uId);
         if (hu.heicsaUser) {
             try {
-                firestore().doc(`heicsa/${hu.heicsaUser.uId}/userdata/private`).get().then((result) => {
-                    this.friends = result.data();
-                    console.log(result.data());
-                    console.log(this.friends.messages);
-                    for (let i = 0; i < this.friends.messages.length; i++) {
-                        this.friendDetails(this.friends.messages[i]).then((result: { imgUrl: string, name: string, uid: string, lastMsg: any, time: Number }) => {
+                firestore().doc(`heicsa/${hu.heicsaUser.uId}/userdata/private/cdata/contactList`).get().then((result) => {
+                    this.friends = Object.values(result.data());
+                    console.log(result.data())
+                    console.log(this.friends);
+                    for (let i = 0; i < this.friends.length; i++) {
+                        this.friendDetails(this.friends[i]).then((result: { imgUrl: string, name: string, uid: string, lastMsg: any, time: Number }) => {
                             if (this.friend == null) {
                                 this.friend = [result];
                             } else {
                                 this.friend.push(result);
                             }
-                            if (i === (this.friends.messages.length - 1)) {
+                            if (i === (this.friends.length - 1)) {
                                 localStorage.setItem('MessagesList', JSON.stringify(this.friend));
                             }
                         });
@@ -64,13 +64,41 @@ export class MessagesListComponent implements OnInit {
         try {
             await database().ref(`usernames/${a}`).once('value', (snapshot) => {
                 dbData = snapshot.val();
+                console.log('This ' + snapshot.val())
             })
-            database()
+            await database()
                 .ref(`/messages/${this.ucID(this.hu.heicsaUser.uId, dbData.uid)}`)
                 .limitToLast(1)
-                .on('value', (s) => {
-                    mdbData = Object.values(s.val());
+                .once('value', (s) => {
+                    if (s.val() == null) {
+                        console.log('s.val() is null')
+                        mdbData = [{
+                            m: 'send a msg',
+                            s: {
+                                o: {
+                                    s: true,
+                                    I: 1
+                                },
+                                e: {
+                                    d: false,
+                                    s: false,
+                                }
+                            },
+                            t: Date.now()
+                        }]
+                    } else {
+                        mdbData = Object.values(s.val());
+                    }
                 })
+            if (dbData.imgUrl == null) {
+                dbData.imgUrl = 'assets/app/home/astronaut.png'
+            }
+            if (mdbData[0].m.length > 20) {
+                mdbData[0].m = mdbData[0].m.slice(0, 20)
+            }
+            if (mdbData == null) {
+
+            }
         } catch (error) {
             console.log(error.message)
         }
@@ -78,12 +106,12 @@ export class MessagesListComponent implements OnInit {
             imgUrl: dbData.imgUrl, name: dbData.name, uid: dbData.uid, lastMsg: mdbData[0].m, time: mdbData[0].t
         }
     }
-    timeReturn(ts:any): string {
+    timeReturn(ts: any): string {
         var date_ob = new Date(ts);
         var hours = ("0" + date_ob.getHours()).slice(-2)
         var minutes = ("0" + date_ob.getMinutes()).slice(-2);
         var seconds = ("0" + date_ob.getSeconds()).slice(-2);
-        return `${hours} + " : " + ${minutes}`
+        return `${hours}:${minutes}`
     }
     ucID(a: string, b: string) {
         return (a > b) ? (a + '_' + b) : (b + '_' + a);

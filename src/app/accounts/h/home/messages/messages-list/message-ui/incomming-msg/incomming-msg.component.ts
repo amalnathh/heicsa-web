@@ -19,7 +19,7 @@ export class IncommingMsgComponent implements OnInit {
     var hours = ("0" + date_ob.getHours()).slice(-2)
     var minutes = ("0" + date_ob.getMinutes()).slice(-2);
     var seconds = ("0" + date_ob.getSeconds()).slice(-2);
-    return `${hours} + " : " + ${minutes}`
+    return `${hours}:${minutes}`
 }
   ngOnInit(): void {
   }

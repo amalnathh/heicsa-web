@@ -26,6 +26,7 @@ initializeApp(firebaseConfig);
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
     }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [{ provide: LocationStrategy, useClass: PathLocationStrategy }],
   bootstrap: [AppComponent],

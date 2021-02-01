@@ -3,17 +3,28 @@
     height: 50px;
     border-radius: 50%;
 }
+.friends{
+    padding: 3px;
+}
 .friends>div{
+    padding: 5px;
+    border-radius: 3px;
     display: flex;
     align-items: center;
 }
+.nameD{
+    width: 100%;
+}
 .name{
-    margin: 20px;
+    margin: 6.5px;
     font-weight: bold;
 }
 .lastMsgUreadMsgBlock_parent{
     display: flex;
+    width:100%;
     justify-content: space-between;
+    align-items: center;
+    padding-left: 5px;
 }
 .last_Msg{
     font-size: small;
