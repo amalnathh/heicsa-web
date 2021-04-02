@@ -1,12 +1,14 @@
 <div class="parent_MessagesModule">
+    <!-- <div><span>Messages.</span></div> -->
     <div>
-     <div class="messagesList">
-        <div>
-           <app-messages-list></app-messages-list>
+        <div class="messagesList">
+            <div>
+            <app-messages-list></app-messages-list>
+            </div>
         </div>
-     </div>
-     <div class="messagingBox">
-        <router-outlet></router-outlet>
-     </div>
+        <div class="messagingBox">
+            <!--<router-outlet></router-outlet>-->
+            <app-message-ui></app-message-ui>
+        </div>
     </div>
 </div>

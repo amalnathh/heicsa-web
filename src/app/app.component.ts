@@ -21,11 +21,7 @@ export class AppComponent {
     this._router.events.subscribe((event: Event) => {
       switch (true) {
         case event instanceof NavigationStart: {
-          if (this.router.includes('message')) {
-            this.loading = false;
-          } else {
-            this.loading = true;
-          }
+          this.loading = true;
           break;
         }
         case event instanceof NavigationEnd:

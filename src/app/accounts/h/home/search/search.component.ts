@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { database } from 'firebase';
 
 @Component({
     selector: 'app-search',
@@ -18,5 +19,8 @@ export class SearchComponent implements OnInit {
   // tslint:disable-next-line:typedef
     log(a: string) {
         console.log(a);
+        // database().ref(`usernames/${a}}`).once('value', (v) => {
+        //     console.log('success');
+        //   }).then
     }
 }

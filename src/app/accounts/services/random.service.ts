@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
     providedIn: 'root',
 })
 export class Random {
- private readonly key = this.RandomString(8);
-    makeConst(length: number) {
+    private readonly key = this.RandomString(8);
+
+    makeConst(length: number): string {
         var result = '';
         const characters =
             'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_^%$#@';
@@ -16,7 +17,7 @@ export class Random {
         return result;
     }
 
-    RandomString(length: number) {
+    RandomString(length: number): string {
         var result = '';
         const charac = this.makeConst(62);
         const charactersLength = charac.length;
@@ -27,7 +28,8 @@ export class Random {
         }
         return result;
     }
-    setKey(): string{
+
+    setKey(): string {
         return this.key;
     }
 }

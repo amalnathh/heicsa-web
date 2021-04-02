@@ -3,7 +3,9 @@
         <div>
             <span>{{msgData.m}}</span>
             <div class="font_sml">
-                <span>{{timeReturn(msgData.t)}}</span>
+                <ng-template [ngIf]="!(msgSer.timeReturn(msgData.t))">
+                    <span>{{msgSer.normalTime(msgData.t)}}</span>
+                </ng-template>
             </div>
         </div>
     </div>

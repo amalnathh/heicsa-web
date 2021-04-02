@@ -2,12 +2,12 @@
   <div class="input">
     <div class="input_P">
       <label>
-        <input type="text" #input (focus)="this.adb=true">
+        <input type="text" #input (focus)="this.adb=true" (keypress)='log(input.value)'>
       </label>
       <div class="autoComplete">
         <div *ngFor="let item of items;index as i">
           <div class="autoCitems">
-            <div>{{item.st}} {{i}}</div>
+            <div (focus)='log(item.st)'>{{item.st}} {{i}}</div>
           </div>
         </div>
       </div>

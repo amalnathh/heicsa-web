@@ -7,6 +7,7 @@ import { MessagesListComponent } from './messages-list/messages-list.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatRippleModule } from '@angular/material/core';
+import {MessageUiModule} from './messages-list/message-ui/message-ui.module';
 
 @NgModule({
     declarations: [MessagesComponent, MessagesListComponent],
@@ -16,7 +17,8 @@ import { MatRippleModule } from '@angular/material/core';
         MatButtonModule,
         MatIconModule,
         MatProgressBarModule,
-        MatRippleModule
+        MatRippleModule,
+        MessageUiModule
     ],
     exports: [
     ]

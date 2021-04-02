@@ -26,6 +26,7 @@
     "@ctrl/ngx-emoji-mart": "^4.1.0",
     "crypto-js": "^4.0.0",
     "firebase": "^7.18.0",
+    "ngx-device-detector": "^2.0.6",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"

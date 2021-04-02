@@ -5,10 +5,10 @@ import {MessagesComponent} from './messages.component';
 const routes: Routes = [
     {
         path: '', component: MessagesComponent,
-        children: [{
-            path: ':enData', loadChildren: () => import('./messages-list/message-ui/message-ui.module').then((m) =>
-                m.MessageUiModule)
-        }]
+        // children: [{
+        //     path: ':enData', loadChildren: () => import('./messages-list/message-ui/message-ui.module').then((m) =>
+        //         m.MessageUiModule)
+        // }]
     }
 ];
 

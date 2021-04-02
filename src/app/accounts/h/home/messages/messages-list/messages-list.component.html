@@ -1,3 +1,14 @@
+<div *ngIf="this.messagesLoading;else MsgReady">
+  <div class="Loader">
+    <div class="bouncer">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+</div>
+<ng-template #MsgReady>
 <div class="parent_block">
   <div *ngFor="let chats of friend;index as i;">
     <div class="friends" (click)="Fa26gsa(chats)">
@@ -16,3 +27,4 @@
     </div>
   </div>
 </div>
+</ng-template>

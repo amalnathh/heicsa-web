@@ -25,7 +25,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MessageUiRoutingModule
     ],
     exports: [
-        MessageUiComponent
+    MessageUiComponent
     ]
 })
 export class MessageUiModule {

@@ -19,6 +19,11 @@
     float: left;
     background-color: whitesmoke;
 }
+div>span{
+    font-family: system-ui;
+    font-size: 34px;
+    font-weight: bold;
+}
 
 .messagesBox {
     height: 100%;
@@ -26,6 +31,10 @@
     padding: 10px;
     float: right;
     background-color: rgb(216, 221, 226);
+    position: relative;
+}
+app-messages-ui{
+    position: absolute;
 }
 
 ::-webkit-scrollbar {

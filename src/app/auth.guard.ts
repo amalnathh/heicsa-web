@@ -26,10 +26,10 @@ export class LoginSignUpAuth implements CanActivate {
   canActivate(): boolean {
     if (auth().currentUser) {
       this.router.navigateByUrl('/home');
-      console.log('lsg false')
+      console.log('lsg false');
       return false;
     }
-    console.log('lsg true')
+    console.log('lsg true');
     return true;
   }
 }

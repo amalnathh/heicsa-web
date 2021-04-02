@@ -1,14 +1,14 @@
-<ng-template [ngIf]="!this.mLoadingEnded">
-    <div style="height: 93vh;display: flex;justify-content: center;">
-        <div>
-            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </div>
+<ng-template [ngIf]="(this.msgService.thisUserIdentifier==undefined)">
+    <div style="height: 93vh;display: flex;justify-content: center;align-items: center;">
+        <span>
+            <h1>Tap on a chat.</h1>
+        </span>
     </div>
 </ng-template>
-<ng-template [ngIf]="this.mLoadingEnded">
+<ng-template [ngIf]="!(this.msgService.thisUserIdentifier==undefined)">
     <div class="parent_Message">
         <div class="top">
-            <div class="name"><span>{{endUser.name}}</span></div>
+            <div class="name"><span>{{this.msgService.endUser.name}}</span></div>
             <div class="pic">
                 <!-- <img [alt]="userImage" [src]="this.url" width="50px" height="50px" class="pic_image"> -->
             </div>
@@ -16,11 +16,11 @@
         <div class="flexContainer">
             <div class="messages_area">
                 <div class="scrollArea">
-                    <ng-template let-messages [ngForOf]="timeLineOfMessages" ngFor>
-                        <ng-template [ngIf]="inOut(messages.s.o.I)">
+                    <ng-template let-messages [ngForOf]="this.msgService.timeLineOfMessages" ngFor>
+                        <ng-template [ngIf]="this.msgService.inOut(messages.s.o.I)">
                             <out-going-msg [msgData]="messages"></out-going-msg>
                         </ng-template>
-                        <ng-template [ngIf]="!inOut(messages.s.o.I)">
+                        <ng-template [ngIf]="!this.msgService.inOut(messages.s.o.I)">
                             <incomming-msg [msgData]="messages"></incomming-msg>
                         </ng-template>
                     </ng-template>
@@ -31,13 +31,13 @@
                     <mat-form-field [style.width.%]=100 appearance="outline">
                         <mat-label>Message</mat-label>
                         <label>
-                            <textarea [(ngModel)]="msgToSend" matAutosizeMaxRows=6 matAutosizeMinRows=1 matInput
-                                matTextareaAutosize name="message" type="text" #msgIn>
+                            <textarea [(ngModel)]="this.msgService.msgToSend" matAutosizeMaxRows=6 matAutosizeMinRows=1
+                                matInput matTextareaAutosize name="message" type="text" #msgIn>
                            </textarea>
                         </label>
                     </mat-form-field>
                     <div style="padding-bottom: 20px; display: flex; align-items: center; height: 64px;">
-                        <button mat-icon-button matSuffix (click)="msg(msgIn.value)" matTooltip='Enter'>
+                        <button mat-icon-button matSuffix (click)="this.sendMsg(msgIn.value)" matTooltip='Enter'>
                             <mat-icon fontSet="material-icons-round">send</mat-icon>
                         </button>
                     </div>

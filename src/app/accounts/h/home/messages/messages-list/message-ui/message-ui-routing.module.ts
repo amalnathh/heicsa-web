@@ -4,7 +4,7 @@ import {MessageUiComponent} from './message-ui.component';
 
 const routes: Routes = [
     {
-        path: ':enData', component: MessageUiComponent,
+        // path: ':enData', component: MessageUiComponent,
     }
 ];
 

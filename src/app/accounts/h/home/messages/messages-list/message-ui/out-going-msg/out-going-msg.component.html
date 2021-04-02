@@ -5,18 +5,17 @@
                 <span style="float: right;margin-right: 1em;">{{msgData.m}}</span>
             </div>
             <div class="info">
-                <span>{{timeReturn(msgData.t)}}</span>
-                <ng-template
-                    [ngIf]="msgData.s.o.s&&!msgData.s.e.d&&!msgData.s.e.s">
-                    <mat-icon fontSet="material-icons-round">done</mat-icon>
-                </ng-template>
-                <ng-template
-                    [ngIf]="msgData.s.o.s&&msgData.s.e.d&&!msgData.s.e.s">
-                    <mat-icon fontSet="material-icons-round">done_all</mat-icon>
-                </ng-template>
-                <ng-template
-                    [ngIf]="msgData.s.o.s&&msgData.s.e.d&&msgData.s.e.s">
-                    <mat-icon style="color: rgb(138, 172, 247);" fontSet="material-icons-round">done_all</mat-icon>
+                <ng-template [ngIf]="!(msgSer.timeReturn(msgData.t))">
+                    <span>{{msgSer.normalTime(msgData.t)}}</span>
+                    <ng-template [ngIf]="msgData.s.o.s&&!msgData.s.e.d&&!msgData.s.e.s">
+                        <mat-icon fontSet="material-icons-round">done</mat-icon>
+                    </ng-template>
+                    <ng-template [ngIf]="msgData.s.o.s&&msgData.s.e.d&&!msgData.s.e.s">
+                        <mat-icon fontSet="material-icons-round">done_all</mat-icon>
+                    </ng-template>
+                    <ng-template [ngIf]="msgData.s.o.s&&msgData.s.e.d&&msgData.s.e.s">
+                        <mat-icon style="color: rgb(138, 172, 247);" fontSet="material-icons-round">done_all</mat-icon>
+                    </ng-template>
                 </ng-template>
             </div>
         </div>
