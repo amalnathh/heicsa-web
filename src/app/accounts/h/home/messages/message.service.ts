@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { database } from 'firebase';
 import { AuthData } from 'src/app/accounts/services/auth.service';
-import { MessageData } from './messages-list/message-ui/message-ui.component';
+import { Messages } from '../../../../interfaces/message';
 import { Random } from '../../../services/random.service';
 import * as crypto from 'crypto-js';
-import { defer } from 'rxjs';
 @Injectable({
     providedIn: 'root',
 })
@@ -13,15 +12,14 @@ export class MessageService {
     sub: any;
     mLoadingEnded = false;
     paramData: any;
-    md: MessageData;
+    md: Messages;
     msgToSend: string;
     timeLineOfMessages = [];
     thisUserIdentifier: number;
     feed: any;
     hidingList = false
     d = 0;
-    sd: any;
-    lastMsg: any;
+
     constructor(private data: AuthData, private Random: Random) {
     }
 
@@ -58,70 +56,36 @@ export class MessageService {
     }
 
     async msg(a: string) {
-        this.msgToSend = undefined;
+        let md:Messages = {
+            m:a,
+            s:{
+                I:this.thisUserIdentifier,
+                sts:'sending'
+            },
+            t:Date.now()
+        }
         if ((a === '') || (a === null) || (a === undefined)) {
-        } else {
-            await this.SendMessage(a);
+        } else { 
+            this.timeLineOfMessages.push(md)
         }
     }
 
-    async SendMessage(g: string): Promise<void> {
-        try {
-            let md: MessageData;
-            md = {
-                m: g,
-                s: {
-                    o: {
-                        s: true,
-                        I: this.thisUserIdentifier
-                    },
-                    e: {
-                        d: false,
-                        s: false,
-                    }
-                },
-                t: Date.now()
-            };
-            await database().ref(`messages/${this.ucID(this.data.heicsaUser.uId, this.endUser.uid)}/${md.t}`).set(md).then(
-                () => {
-                    let c =23+this.d;
-                    this.lastMsg = this.timeLineOfMessages[c];
-                    this.timeLineOfMessages.pop();
-                    if (this.normalTime(md.t) === this.normalTime(this.lastMsg.t)) {
-                        this.lastMsg.t = 8;
-                    } else {
-                        this.sd = this.normalTime(this.lastMsg.t);
-                    }
-                    this.timeLineOfMessages.push(md);
-                    this.d++
-                    this.lastMsg= '';
-                }
-            );
-        } catch (e) {
-            console.log(e.message);
-        }
-    }
+  
 
     ucID(a: string, b: string): string {
         return (a > b) ? (a + '_' + b) : (b + '_' + a);
     }
-
-    timeReturn(ts: any): boolean {
-        if (ts == 8) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+msgSeen(a:number){
+    let d ='seen';
+    database().ref(`/messages/${this.ucID(this.data.heicsaUser.uId, this.endUser.uid)}/${a}/m/s/sts`).set(d).then(()=>{})
+}
     normalTime(a: any): any {
         var date_ob = new Date(a);
         var hours = ("0" + date_ob.getHours()).slice(-2)
         var minutes = ("0" + date_ob.getMinutes()).slice(-2);
-        var seconds = ("0" + date_ob.getSeconds()).slice(-2);
         return `${hours}:${minutes}`;
     }
     async getMessages(): Promise<void> {
-        console.log('Get Messages');
         if (this.timeLineOfMessages.length === 0) {
             await database()
                 .ref(`/messages/${this.ucID(this.data.heicsaUser.uId, this.endUser.uid)}`)
@@ -129,45 +93,44 @@ export class MessageService {
                 .once('value', (s) => {
                     if (s.val() == null) {
                         this.timeLineOfMessages = [{
-                            m: 'send a msg',
+                            m: 'Say Hai!',
                             s: {
-                                o: {
-                                    s: true,
-                                    I: 1
-                                },
-                                e: {
-                                    d: false,
-                                    s: false,
-                                }
+                                I: 1,
+                                sts: 'send'
                             },
                             t: Date.now()
                         }];
                     } else {
-                        // console.log(s.val());
-                        let dataI25a = Object.values(s.val());
-                        for (let i = 0; i < (dataI25a.length - 2); i++) {
+                        let dataI25a: any = Object.values(s.val());
+                        let gg = 'delivered'
+                        for (let i = 0; i < (dataI25a.length); i++) {
+                            if (!this.inOut(dataI25a[i].s.I)) {
+                                if (dataI25a[i].s.sts == 'send') {
+                                    database()
+                                        .ref(`/messages/${this.ucID(this.data.heicsaUser.uId, this.endUser.uid)}/${dataI25a[i].t}/s/sts`).set(gg);
+                                }
+                            }
                             this.timeLineOfMessages.push(dataI25a[i]);
                         }
                     }
                 });
         }
-        this.sd = this.normalTime(this.timeLineOfMessages[0].t);
-        for (let i = 0; i < this.timeLineOfMessages.length; i++) {
-            if (this.sd === this.normalTime(this.timeLineOfMessages[i].t)) {
-                this.timeLineOfMessages[i].t = 8;
-            } else {
-                this.sd = this.normalTime(this.timeLineOfMessages[i].t)
-            }
-        }
+
         database()
             .ref(`/messages/${this.ucID(this.data.heicsaUser.uId, this.endUser.uid)}`)
             .limitToLast(1)
             .on('value', (data) => {
                 let d: any = Object.values(data.val());
                 for (let i = 0; i < d.length; i++) {
+                    console.log('d.length is '+d.length)
                     if (this.timeLineOfMessages.includes(d[i])) {
                     } else {
-                        this.timeLineOfMessages.push(d[i]);
+                        if (this.inOut(d[i].s.I)) {
+                            console.log('hehe');
+                        } else {
+                            console.log(d[i]);
+                            this.timeLineOfMessages.push(d[i]);
+                        }
                     }
                 }
             });

@@ -12,15 +12,15 @@
             <span>{{userDETAILS.name}}</span>
         </div>
         <div class="addFrnd">
-            <button mat-icon-button (click)='req()'>
+            <!-- <button mat-icon-button (click)='req()'>
                 <ng-template [ngIf]='!reqSend'>
                     <mat-icon fontSet="material-icons-round">add</mat-icon>
                 </ng-template>
                 <ng-template [ngIf]='reqSend'>
                     <mat-icon fontSet="material-icons-round">done</mat-icon>
                 </ng-template>
-            </button>
+            </button> -->
         </div>
-        <button mat-button (click)="this.msgthisUser = true">Message</button>
+        <button mat-button (click)="sendMsg()">Message</button>
     </div>
 </ng-template>

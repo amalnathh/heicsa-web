@@ -1,5 +1,5 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { MessageData } from '../message-ui.component';
+import { Component, HostListener, Input, OnInit, AfterViewChecked } from '@angular/core';
+import { Messages } from 'src/app/interfaces/message';
 import { MessageService } from '../../../message.service';
 @Component({
   selector: 'incomming-msg',
@@ -7,13 +7,15 @@ import { MessageService } from '../../../message.service';
   styleUrls: ['./incomming-msg.component.css']
 })
 export class IncommingMsgComponent implements OnInit {
-  @Input() 'msgData': MessageData
-  constructor(public msgSer:MessageService) { 
+  @Input() 'msgData': Messages
+  constructor(public msgSer: MessageService) {
   }
-  @HostListener('window.onload', ['$event'])
-  msgRead() {
-    console.log('msg seen')
-    this.msgData.s.e.s = true;
+  fuse = true;
+  ngAfterViewChecked() {
+    if (this.fuse) {
+      this.msgSer.msgSeen(this.msgData.t);
+      this.fuse = false;
+    }
   }
   ngOnInit(): void {
   }

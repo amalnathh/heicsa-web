@@ -15,12 +15,12 @@
         </div>
         <div class="flexContainer">
             <div class="messages_area">
-                <div class="scrollArea">
+                <div class="scrollArea" #scrollMe [scrollTop]="scrollMe.scrollHeight">
                     <ng-template let-messages [ngForOf]="this.msgService.timeLineOfMessages" ngFor>
-                        <ng-template [ngIf]="this.msgService.inOut(messages.s.o.I)">
-                            <out-going-msg [msgData]="messages"></out-going-msg>
+                        <ng-template [ngIf]="this.msgService.inOut(messages.s.I)">
+                            <out-going-msg [msgData]="messages"[enduserid]='msgService.endUser.uid'></out-going-msg>
                         </ng-template>
-                        <ng-template [ngIf]="!this.msgService.inOut(messages.s.o.I)">
+                        <ng-template [ngIf]="!this.msgService.inOut(messages.s.I)">
                             <incomming-msg [msgData]="messages"></incomming-msg>
                         </ng-template>
                     </ng-template>

@@ -11,6 +11,7 @@ export class ProfilesComponent implements OnInit {
   sub: any;
   id: any;
   userDETAILS: any;
+  myUsername: string;
   chatID: string;
   dbLoad = false;
   reqSend = false;
@@ -24,28 +25,39 @@ export class ProfilesComponent implements OnInit {
       console.log(this.id);
     });
     database().ref(`usernames/${this.id}`).once('value', (v) => {
-      console.log('success');
+      console.log(v.val());
       this.userDETAILS = v.val();
     }).then(() => {
       this.dbLoad = true;
       firestore()
         .doc(`heicsa/${this.ad.heicsaUser.uId}/userdata/private/cdata/contactList`).get().then(r => {
-          this.isAFriend = Object.values(r.data());
-          if (this.isAFriend.includes(this.id)) {
-            this.reqSend = true;
-          } else {
-            this.reqSend = false;
+          if (r.data() != null) {
+            this.isAFriend = Object.values(r.data());
+            if (this.isAFriend.includes(this.id)) {
+              this.reqSend = true;
+            } else {
+              this.reqSend = false;
+            }
           }
         })
     })
+    firestore().doc(`heicsa/${this.ad.heicsaUser.uId}/userdata/private`).get().then(r => {
+      this.myUsername = r.data().username;
+    })
   }
 
-  req() {
-    navigator.userAgent
+  // req() {
+  //   firestore()
+  //     .doc(`heicsa/${this.ad.heicsaUser.uId}/userdata/private/cdata/contactList`)
+  //     .set({ [this.key]: this.id }, { merge: true })
+  //     .then(() => { this.reqSend = true; })
+  // }
+
+  sendMsg() {
     firestore()
       .doc(`heicsa/${this.ad.heicsaUser.uId}/userdata/private/cdata/contactList`)
-      .set({ [this.key]: this.id }, { merge: true })
-      .then(() => { this.reqSend = true; })
+      .set({ [this.id]: this.key }, { merge: true }).then(() => { console.log('Success') });
+    firestore().doc(`heicsa/${this.userDETAILS.uid}/userdata/msgReq`).set({ [this.myUsername]: this.key }, { merge: true });
   }
 
   ngOnInit() {

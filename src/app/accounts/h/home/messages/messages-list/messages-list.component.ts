@@ -3,7 +3,6 @@ import { database, firestore } from 'firebase';
 import { AuthData } from '../../../../services/auth.service';
 import * as cjs from 'crypto-js';
 import { Random } from '../../../../services/random.service';
-import { Router } from '@angular/router';
 import { MessageService } from "../message.service";
 
 export interface MessagesList {
@@ -26,15 +25,20 @@ export class MessagesListComponent implements OnInit {
     messagesLoading= true;
     container: ElementRef;
 
-    constructor(private hu: AuthData, private random: Random, private router: Router, private msgService: MessageService) {
-        // console.log(hu.heicsaUser.uId);
+    constructor(private hu: AuthData, private random: Random, private msgService: MessageService) { 
         this.messagesListNumber = 0;
         this.messagesLoading = true;
         if (hu.heicsaUser) {
             try {
                 firestore().doc(`heicsa/${hu.heicsaUser.uId}/userdata/private/cdata/contactList`).get().then((result) => {
-                    this.friendsListFromDb = Object.values(result.data());
-                    console.log(result.data());
+                    this.friendsListFromDb = Object.keys(result.data());
+                    console.log(this.friendsListFromDb);
+                    firestore().doc(`heicsa/${this.hu.heicsaUser.uId}/userdata/msgReq`).get().then(r=>{
+                        let abc = Object.keys(r.data());
+                        for(let i=0;i<abc.length;i++){
+                            this.friendsListFromDb.push(abc[i]);
+                        }
+                    })
                     for (let i = 0; i < this.friendsListFromDb.length; i++) {
                         this.friendDetails(this.friendsListFromDb[i]).then((result: { imgUrl: string, name: string, uid: string, lastMsg: any, time: number }) => {
                                 console.log('starting..');
@@ -43,9 +47,9 @@ export class MessagesListComponent implements OnInit {
                                 } else {
                                     this.friend.push(result);
                                 }
-                                if (i === (this.friendsListFromDb.length - 1)) {
-                                    localStorage.setItem('MessagesList', JSON.stringify(this.friend));
-                                }
+                                // if (i === (this.friendsListFromDb.length - 1)) {
+                                //     localStorage.setItem('MessagesList', JSON.stringify(this.friend));
+                                // }
                             });
                     }
                 });
@@ -63,7 +67,6 @@ export class MessagesListComponent implements OnInit {
     Fa26gsa(a: any): void {
         let b = a;
         this.msgService.hidingList = true;
-        //this.router.navigateByUrl('messages/' + this.encrypt(a));
         this.msgService.clearAndInjectNewUser(this.encrypt(b));
     }
 
@@ -74,25 +77,17 @@ export class MessagesListComponent implements OnInit {
         try {
             await database().ref(`usernames/${a}`).once('value', (snapshot) => {
                 dbData = snapshot.val();
-                // console.log('This ' + snapshot.val());
             });
             await database()
                 .ref(`/messages/${this.ucID(this.hu.heicsaUser.uId, dbData.uid)}`)
                 .limitToLast(1)
                 .once('value', (s) => {
                     if (s.val() == null) {
-                        console.log('s.val() is null');
-                        mdbData = [{
-                            m: 'send a msg',
+                        mdbData = [ {
+                            m: 'Send a message',
                             s: {
-                                o: {
-                                    s: true,
-                                    I: 1
-                                },
-                                e: {
-                                    d: false,
-                                    s: false,
-                                }
+                               I: 1,
+                               sts: 'send'
                             },
                             t: Date.now()
                         }];
@@ -126,7 +121,6 @@ export class MessagesListComponent implements OnInit {
         let date_ob = new Date(ts);
         let hours = ('0' + date_ob.getHours()).slice(-2);
         let minutes = ('0' + date_ob.getMinutes()).slice(-2);
-        // let seconds = ('0' + date_ob.getSeconds()).slice(-2);
         return `${hours}:${minutes}`;
     }
 

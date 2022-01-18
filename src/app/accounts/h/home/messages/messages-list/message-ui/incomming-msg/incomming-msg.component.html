@@ -1,11 +1,14 @@
 <div class="msg_in">
     <div class="msg">
         <div>
-            <span>{{msgData.m}}</span>
-            <div class="font_sml">
-                <ng-template [ngIf]="!(msgSer.timeReturn(msgData.t))">
-                    <span>{{msgSer.normalTime(msgData.t)}}</span>
-                </ng-template>
+            <div>
+                <span style="padding-left: 4px;overflow-wrap: break-word;
+                word-break: break-word;white-space: pre;">{{msgData.m}}</span>
+                <div class="font_sml">
+                    <ng-template [ngIf]="true">
+                        <span>{{msgSer.normalTime(msgData.t)}}</span>
+                    </ng-template>
+                </div>
             </div>
         </div>
     </div>

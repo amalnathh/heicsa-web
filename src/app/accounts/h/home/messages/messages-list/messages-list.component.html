@@ -1,30 +1,34 @@
 <div *ngIf="this.messagesLoading;else MsgReady">
   <div class="Loader">
-    <div class="bouncer">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
+    <h1 class="loader">
+      <span>M</span>
+      <span>e</span>
+      <span>s</span>
+      <span>s</span>
+      <span>a</span>
+      <span>g</span>
+      <span>e</span>
+      <span>s</span>
+    </h1>
   </div>
 </div>
 <ng-template #MsgReady>
-<div class="parent_block">
-  <div *ngFor="let chats of friend;index as i;">
-    <div class="friends" (click)="Fa26gsa(chats)">
-      <div mat-ripple>
-        <div class="image">
-          <img [src]="(chats.imgUrl == null)?'assets/app/home/astronaut.png':chats.imgUrl" >
-        </div>
-        <div class="nameD">
-          <div class="name">{{chats.name}}</div>
-          <div class="lastMsgUreadMsgBlock_parent">
-            <div class="last_Msg">{{chats.lastMsg}}</div>
-            <div class="badge">{{timeReturn(chats.time)}}</div>
+  <div class="parent_block">
+    <div *ngFor="let chats of friend;index as i;">
+      <div class="friends" (click)="Fa26gsa(chats)">
+        <div mat-ripple>
+          <div class="image">
+            <img [src]="(chats.imgUrl == null)?'assets/app/home/astronaut.png':chats.imgUrl">
+          </div>
+          <div class="nameD">
+            <div class="name">{{chats.name}}</div>
+            <div class="lastMsgUreadMsgBlock_parent">
+              <div class="last_Msg">{{chats.lastMsg}}</div>
+              <div class="badge">{{timeReturn(chats.time)}}</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </ng-template>

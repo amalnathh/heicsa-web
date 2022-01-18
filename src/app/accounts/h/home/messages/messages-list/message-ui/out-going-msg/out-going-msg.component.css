@@ -1,22 +1,43 @@
-
 .msg_out {
     float: right;
     width: 70%;
 }
 .msg {
-    padding: 4px;
-    background-color: transparent;
+    padding:3px;
 }
-.msg>span {
-    overflow-y: scroll;
+.msg>div{
+    display: flex;
+    justify-content: flex-end;
+}
+.msg>div>div{
+    display: flex;
+    padding: 8px;
+    padding-right: 2px;
+    padding-bottom: 2px;
+    padding-top: 4px;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: rgb(207, 207, 207);
+}
+.msgSpan>span{
+    float: right;
+    margin-right: 10px;
+    white-space: break-spaces;
+    margin-top: 3px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    margin-bottom: 6px;
 }
 .info {
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    align-items: flex-end;
     padding: 2px;
-    font-size: x-small;
-    width: 100%;
+    font-size: 9px;
+}
+.info>span{
+    margin-bottom: 5px;
 }
 .info>mat-icon {
     margin-left: 1px;
