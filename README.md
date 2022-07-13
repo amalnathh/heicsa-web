@@ -1,3 +1,3 @@
 # heicsa-web
-Angular web app of heicsa
+Heicsa web app
 This is social media web app made with angular and firebase
